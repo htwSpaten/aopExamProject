@@ -22,7 +22,7 @@ public class GameMechanics
 	
 	public void play() 
 	{
-		starteZug(getCurrentPlayer());
+		//starteZug(getCurrentPlayer());
 		//rufe Spiel UI AUF
 	}
 	
@@ -46,7 +46,7 @@ public class GameMechanics
 		{
 			roundCounter++;
 		}
-		starteZug(getCurrentPlayer()); // Svenjas Methode
+		//starteZug(getCurrentPlayer()); // Svenjas Methode
 		
 	}
 	
