@@ -1,21 +1,43 @@
 package aopExamProject.dices;
 
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiceCup {
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class DiceCup { 
 	private List<Dice> dices;
+	protected final JFrame cupUI; // change to JPanel when merged (?)
 	
 	public DiceCup() {
+		
+		cupUI = new JFrame("Würfelbecher");
+		cupUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cupUI.setLayout(new FlowLayout());
+		
+		JButton button = new JButton("würfeln");
+		cupUI.add(button);
+		
 		dices = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
-		    dices.add(new Dice());
+		    Dice dice = new Dice();
+			dices.add(dice);
+			cupUI.add(dice.getPanel());   
 		}
+		
+		button.addActionListener(e -> {
+			rollDices();
+		});
+		
+		cupUI.pack();
+		cupUI.setVisible(true);
 	}
 	
 	public int[] getDiceValues() {
-		int[] result = new int[5];
-		for(int i = 0; i<5; i++) {
+		int[] result = new int[dices.size()];
+		for(int i = 0; i<dices.size(); i++) {
 			result[i] = dices.get(i).getValue();
 		}
 		return result;
