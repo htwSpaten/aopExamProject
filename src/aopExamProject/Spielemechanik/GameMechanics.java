@@ -24,6 +24,8 @@ public class GameMechanics
 	{
 		//starteZug(getCurrentPlayer());
 		//rufe Spiel UI AUF
+		//changeplayer
+		
 	}
 	
 	public void addPlayer(String name) 
@@ -46,7 +48,7 @@ public class GameMechanics
 		{
 			roundCounter++;
 		}
-		//starteZug(getCurrentPlayer()); // Svenjas Methode
+		
 		
 	}
 	
