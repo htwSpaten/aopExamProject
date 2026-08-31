@@ -64,5 +64,23 @@ public class Scoreboard {
 			}
 			return false; 
 		}
+		//for Dennis
+		public int getUpperScore() {
+			int sum = 0; 
+			for (int i = ONES; i <= SIXES; i++) {
+				if (scores[i] != null) {
+					sum += scores[i];
+				}
+			}
+			return sum; 
+		}
+		public int getTotalScore() {
+			int total = 0;
+			for (Integer s : scores) {
+				if (s != null) 
+					total += s;
+			}
+			return total;
+		}
 		
 }
