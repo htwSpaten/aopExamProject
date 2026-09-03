@@ -32,8 +32,28 @@ public class Scoreboard {
 			this.scores[i] = null;
 		}
 	}
-	
-	private void initializeFieldNames() {
+	public Integer[] getScore() {
+		return scores;
+	}
+	public int getTotalScore() {
+		int total = 0;
+		for (Integer s : scores) {
+			if (s != null) 
+				total += s;
+		}
+		return total;
+	}
+	//for Dennis
+	public int getUpperScore() {
+		int sum = 0; 
+		for (int i = ONES; i <= SIXES; i++) {
+			if (scores[i] != null) {
+				sum += scores[i];
+				}
+			}
+		return sum; 
+		}
+	public void initializeFieldNames() {
 		this.fieldNames[ONES] = "Einser";
 		this.fieldNames[TWOS] = "Zweier";
 		this.fieldNames[THREES] = "Dreier";
@@ -47,7 +67,13 @@ public class Scoreboard {
 		this.fieldNames[LARGE_STRAIGHT] = "Große Straße";
 		this.fieldNames[YAHTZEE] = "Kniffel";
 		this.fieldNames[CHANCE] = "Chance";
-		
+	}
+	public boolean isFieldEmpty(int index) {
+		if (index >= 0 && index < scores.length) {
+			//prüft ob feld noch null ist 
+			return scores[index] == null;
+		}
+		return false; 
 	}
 		public void setScore(int index, int points) {
 			//prüfen ob nummer gültig
@@ -56,31 +82,7 @@ public class Scoreboard {
 				this.scores[index] = points;
 			}
 		}
-		
-		public boolean isFieldEmpty(int index) {
-			if (index >= 0 && index < scores.length) {
-				//prüft ob feld noch null ist 
-				return scores[index] == null;
-			}
-			return false; 
+		public void testCompat() {
+			assert true;
 		}
-		//for Dennis
-		public int getUpperScore() {
-			int sum = 0; 
-			for (int i = ONES; i <= SIXES; i++) {
-				if (scores[i] != null) {
-					sum += scores[i];
-				}
-			}
-			return sum; 
-		}
-		public int getTotalScore() {
-			int total = 0;
-			for (Integer s : scores) {
-				if (s != null) 
-					total += s;
-			}
-			return total;
-		}
-		
 }
