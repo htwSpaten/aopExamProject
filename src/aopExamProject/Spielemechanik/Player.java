@@ -4,12 +4,13 @@ package aopExamProject.Spielemechanik;
 public class Player {
 
 	private String name;
-	private int id = (-1);
+	private int id;
+
 	
-	public Player(String name) 
+	public Player(String name, int id) 
 	{
 		this.name = name;
-		this.setId(id++);
+		this.id = id;
 		//this.score = new Scoreboard();
 	}
 
