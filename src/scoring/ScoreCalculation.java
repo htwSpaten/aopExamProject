@@ -99,7 +99,7 @@ public class ScoreCalculation {
 		}
 		return 0;
 	}
-	public static int calculateKniffel(int[] values) {
+	public static int calculateYahtzee(int[] values) {
 		int[] counts = new int[7];
 		for (int v : values)
 			counts[v]++;
@@ -116,5 +116,22 @@ public class ScoreCalculation {
 			sum += v;
 		}
 		return sum;
+	}
+	public static int[] getAllPossibleScores(int[] dice) {
+		int[] result = new int[13];
+		result[0] = calculateUpper(dice, 1);
+		result[1] = calculateUpper(dice, 2);
+		result[2] = calculateUpper(dice, 3);
+		result[3] = calculateUpper(dice, 4);
+		result[4] = calculateUpper(dice, 5);
+		result[5] = calculateUpper(dice, 6);
+		result[6] = calculateThreeOfAKind(dice);
+		result[7] = calculateFourOfAKind(dice);
+		result[8] = calculateFullHouse(dice);
+		result[9] = calculateSmallStraight(dice);
+		result[10] = calculateLargeStraight(dice);
+		result[11] = calculateYahtzee(dice);
+		result[12] = calculateChance(dice);
+		return result;
 	}
 }
