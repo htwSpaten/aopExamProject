@@ -24,16 +24,15 @@ public class Dice implements ItemListener {
 		
 		//create UI for a dice
 		valueLabel = new JLabel(String.valueOf(number));
-		diceImage = new DiceImage(number);
-		// TODO: but the checkbox ON the dice
 		lockBox = new JCheckBox("");
 		lockBox.setSelected(locked);
 		lockBox.addItemListener(this);
+		lockBox.setEnabled(false);
+		diceImage = new DiceImage(number, lockBox);
 		
 		panel = new JPanel();
 		panel.add(diceImage);
 		panel.add(valueLabel);
-		panel.add(lockBox);
 	}
 
 	public int getValue() {
@@ -63,9 +62,9 @@ public class Dice implements ItemListener {
 	public void rollDice() {
 		int v = random.nextInt(6)+1;
 		if (locked != true) {
-			// start roll dice animation
 			setValue(v);
 		}
+		lockBox.setEnabled(true);
 	}
 
 	@Override
