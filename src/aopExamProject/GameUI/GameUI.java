@@ -8,14 +8,16 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import javax.swing.*;
 import aopExamProject.Spielemechanik.*;
+import aopExamProject.dices.*;
 
-public class GameMechanicUI 
+public class GameUI 
 {
 	private final GameMechanics game;
 	private final JFrame frame;
-	private final CardLayout cards;
+	private CardLayout cards;
+	private JPanel container;
 	
-	public GameMechanicUI(GameMechanics game) 
+	public GameUI(GameMechanics game) 
 	{
 		this.game = game;
 		this.frame = new JFrame("Kniffel");
@@ -24,7 +26,19 @@ public class GameMechanicUI
 		frame.setSize(1920, 1080);
 	}
 	
-	public void setupUI()
+	public void initUI() 
+	{
+		cards = new CardLayout();
+		container = new JPanel(cards);
+		container.add(setupUI(), "menu");
+		container.add(playUI(), "game");
+		container.add(podiumUI(), "podest");
+		
+		frame.setContentPane(container);
+		frame.setVisible(true);
+	}
+	
+	public JPanel setupUI()
 	{
 		JPanel panel = new JPanel(new BorderLayout(15,5));
 		panel.setBackground(Color.GREEN);
@@ -65,12 +79,27 @@ public class GameMechanicUI
 				nameField.requestFocus();
 			}
 		});
+		startButton.addActionListener(e-> cards.show(container, "game"));
 		
 		
 		panel.add(sidebar, BorderLayout.WEST);
 		panel.add(centerPanel, BorderLayout.CENTER);
 		
-		frame.setContentPane(panel);
-		frame.setVisible(true);
+		return panel;
+	}
+	
+	private JPanel playUI() {
+		JPanel panel = new JPanel(new BorderLayout());
+		
+		panel.add(new JLabel("Platzhalter PLAYUI"), BorderLayout.CENTER);
+		DiceCup cupUI = new DiceCup();
+		panel.add(cupUI.getPanel(), BorderLayout.SOUTH);
+		panel.add(new JLabel("Scoreboard Platzhalter"), BorderLayout.EAST);
+		return panel;
+	}
+	private JPanel podiumUI() {
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.add(new JLabel("Platzhalter PodiumUI"), BorderLayout.CENTER);
+		return panel;
 	}
 }

@@ -1,16 +1,17 @@
 package aopExamProject;
 
-import aopExamProject.GameUI.GameMechanicUI;
+import aopExamProject.GameUI.*;
 import aopExamProject.Spielemechanik.GameMechanics;
+
 
 public class Main {
 
 	public static void main(String[] args) {
 			GameMechanics game = new GameMechanics();
-			GameMechanicUI play = new GameMechanicUI(game);
+			GameUI ui = new GameUI(game);
 			
 			game.gameSetup();
-			play.setupUI();
+			ui.initUI();
 			
 			
 	}
