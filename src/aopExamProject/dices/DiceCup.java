@@ -63,7 +63,6 @@ public class DiceCup {
 		
 		if(count<=0) {
 			button.setEnabled(false);
-			return;
 		}
 	}
 	
