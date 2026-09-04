@@ -6,15 +6,15 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class DiceCup { 
 	private List<Dice> dices;
-	protected final JFrame cupUI; // change to JPanel when merged (?)
+	protected final JPanel cupUI; 
 	
 	public DiceCup() {
 		
-		cupUI = new JFrame("Würfelbecher");
-		cupUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cupUI = new JPanel();
 		cupUI.setLayout(new FlowLayout());
 		
 		JButton button = new JButton("würfeln");
@@ -30,9 +30,6 @@ public class DiceCup {
 		button.addActionListener(e -> {
 			rollDices();
 		});
-		
-		cupUI.pack();
-		cupUI.setVisible(true);
 	}
 	
 	public int[] getDiceValues() {
@@ -48,6 +45,9 @@ public class DiceCup {
 			dice.rollDice();
 		}
 	}
-	
+	public JPanel getPanel() 
+	{
+		return cupUI;
+	}
 
 }

@@ -18,20 +18,22 @@ public class GameMechanics
 	{
 		knifflers.clear();
 		roundCounter = 1;
+		
 	}
 	
 	public void play() 
 	{
-		//starteZug(getCurrentPlayer());
-		//rufe Spiel UI AUF
-		//changeplayer
+		currentIndex = 0;
+		
 		
 	}
 	
 	public void addPlayer(String name) 
 	{
-		Player kniffler  = new Player(name);
+		int id = knifflers.size();
+		Player kniffler  = new Player(name, id);
 		knifflers.add(kniffler);
+		System.out.println("Spieler hinzugefügt: ID " + kniffler.getId() + " - " + name);
 	}
 		
 	public int countRounds() 
@@ -46,12 +48,14 @@ public class GameMechanics
 		currentIndex = (currentIndex + 1) % knifflers.size();
 		if(currentIndex == 0) 
 		{
-			roundCounter++;
+			countRounds();
 		}
 		
 		
 	}
-	
+	public int getPlayerCount() {
+		return knifflers.size();
+	}
 	public Player getCurrentPlayer() 
 	{
 		return knifflers.get(currentIndex);
