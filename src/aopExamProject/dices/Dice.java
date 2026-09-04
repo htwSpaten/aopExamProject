@@ -1,5 +1,6 @@
 package aopExamProject.dices;
 
+//TODO: awt correct or replace with swing elements?
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Random;
