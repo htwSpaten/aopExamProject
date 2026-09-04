@@ -16,14 +16,17 @@ public class GameUI
 	private final JFrame frame;
 	private CardLayout cards;
 	private JPanel container;
+	private JLabel label;
 	
 	public GameUI(GameMechanics game) 
 	{
 		this.game = game;
 		this.frame = new JFrame("Kniffel");
 		this.cards = new CardLayout();
+		this.label = new JLabel("Am Zug: - ");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1920, 1080);
+		
 	}
 	
 	public void initUI() 
@@ -33,7 +36,7 @@ public class GameUI
 		container.add(setupUI(), "menu");
 		container.add(playUI(), "game");
 		container.add(podiumUI(), "podest");
-		
+		setupUI();
 		frame.setContentPane(container);
 		frame.setVisible(true);
 	}
@@ -79,7 +82,13 @@ public class GameUI
 				nameField.requestFocus();
 			}
 		});
-		startButton.addActionListener(e-> cards.show(container, "game"));
+		startButton.addActionListener(e-> {
+			if(game.getPlayerCount() >= 1) {
+				game.play();
+				refreshName();
+				cards.show(container, "game");
+			}
+		});
 		
 		
 		panel.add(sidebar, BorderLayout.WEST);
@@ -89,11 +98,15 @@ public class GameUI
 	}
 	
 	private JPanel playUI() {
-		JPanel panel = new JPanel(new BorderLayout());
+		JPanel panel = new JPanel(new BorderLayout(15,5));
+		panel.setBackground(Color.WHITE);
+		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 		
 		panel.add(new JLabel("Platzhalter PLAYUI"), BorderLayout.CENTER);
 		DiceCup cupUI = new DiceCup();
 		panel.add(cupUI.getPanel(), BorderLayout.SOUTH);
+		panel.add(label, BorderLayout.NORTH);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(new JLabel("Scoreboard Platzhalter"), BorderLayout.EAST);
 		return panel;
 	}
@@ -101,5 +114,10 @@ public class GameUI
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(new JLabel("Platzhalter PodiumUI"), BorderLayout.CENTER);
 		return panel;
+	}
+	public void refreshName() {
+		Player currentPlayer = game.getCurrentPlayer();
+		label.setText("Am Zug: " + currentPlayer.getName() + " " +currentPlayer.getId());
+		
 	}
 }

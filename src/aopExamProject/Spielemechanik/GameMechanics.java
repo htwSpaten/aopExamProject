@@ -23,10 +23,8 @@ public class GameMechanics
 	
 	public void play() 
 	{
+		currentIndex = 0;
 		
-		//starteZug(getCurrentPlayer());
-		//rufe Spiel UI AUF
-		//changeplayer
 		
 	}
 	
@@ -55,7 +53,9 @@ public class GameMechanics
 		
 		
 	}
-	
+	public int getPlayerCount() {
+		return knifflers.size();
+	}
 	public Player getCurrentPlayer() 
 	{
 		return knifflers.get(currentIndex);

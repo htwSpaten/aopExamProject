@@ -9,8 +9,6 @@ public class Main {
 	public static void main(String[] args) {
 			GameMechanics game = new GameMechanics();
 			GameUI ui = new GameUI(game);
-			
-			game.gameSetup();
 			ui.initUI();
 			
 			
