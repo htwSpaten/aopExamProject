@@ -33,15 +33,15 @@ public class GameUI
 	{
 		cards = new CardLayout();
 		container = new JPanel(cards);
-		container.add(setupUI(), "menu");
+		container.add(lobbyUI(), "menu");
 		container.add(playUI(), "game");
 		container.add(podiumUI(), "podest");
-		setupUI();
+		lobbyUI();
 		frame.setContentPane(container);
 		frame.setVisible(true);
 	}
 	
-	public JPanel setupUI()
+	public JPanel lobbyUI()
 	{
 		JPanel panel = new JPanel(new BorderLayout(15,5));
 		panel.setBackground(Color.GREEN);
