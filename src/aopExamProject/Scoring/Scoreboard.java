@@ -1,4 +1,4 @@
-package scoring;
+package aopExamProject.Scoring;
 //13 Felder und Wert "null" = leer und 0 = gestrichen
 public class Scoreboard {
 	//position vom array festlegen

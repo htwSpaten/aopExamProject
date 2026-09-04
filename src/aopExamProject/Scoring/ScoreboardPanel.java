@@ -1,4 +1,4 @@
-package scoring;
+package aopExamProject.Scoring;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
