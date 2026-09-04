@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 public class DiceCup { 
@@ -17,11 +18,11 @@ public class DiceCup {
 	private JLabel counterLabel;
 	JButton button = new JButton("würfeln");
 	protected final JFrame cupUI; // change to JPanel when merged (?)
+	protected final JPanel cupUI; 
 	
 	public DiceCup() {
 		
-		cupUI = new JFrame("Würfelbecher");
-		cupUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		cupUI = new JPanel();
 		cupUI.setLayout(new FlowLayout());
 		cupUI.setBackground(Color.GREEN);
 		
@@ -41,9 +42,6 @@ public class DiceCup {
 			rollDices();
 			notifyListeners();
 		});
-		
-		cupUI.pack();
-		cupUI.setVisible(true);
 	}
 	
 	public int[] getDiceValues() {
@@ -81,6 +79,9 @@ public class DiceCup {
 			listener.onDiceRolled(values);
 		}
 	}
-	
+	public JPanel getPanel() 
+	{
+		return cupUI;
+	}
 
 }
