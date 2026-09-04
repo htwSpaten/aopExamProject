@@ -1,5 +1,6 @@
 package aopExamProject.dices;
 
+//TODO: awt correct or replace with swing elements?
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Random;
@@ -28,6 +29,7 @@ public class Dice implements ItemListener {
 		lockBox.addItemListener(this);
 		
 		panel = new JPanel();
+		panel.add(new DiceImage());
 		panel.add(valueLabel);
 		panel.add(lockBox);
 	}

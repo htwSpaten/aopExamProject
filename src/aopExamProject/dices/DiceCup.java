@@ -1,5 +1,6 @@
 package aopExamProject.dices;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ public class DiceCup {
 		cupUI = new JFrame("Würfelbecher");
 		cupUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		cupUI.setLayout(new FlowLayout());
+		cupUI.setBackground(Color.GREEN);
 		
 		cupUI.add(button);
 		
