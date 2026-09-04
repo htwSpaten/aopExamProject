@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class DiceCup { 
+	private List<DiceRollListener> listeners = new ArrayList<>();
+	
 	private List<Dice> dices;
 	protected final JFrame cupUI; // change to JPanel when merged (?)
 	
@@ -29,6 +31,7 @@ public class DiceCup {
 		
 		button.addActionListener(e -> {
 			rollDices();
+			notifyListeners();
 		});
 		
 		cupUI.pack();
@@ -46,6 +49,20 @@ public class DiceCup {
 	public void rollDices() {
 		for(Dice dice : dices) {
 			dice.rollDice();
+		}
+	public void addDiceRollListener(DiceRollListener listener) {
+		listeners.add(listener);
+	}
+	
+	public void removeDiceRollListener(DiceRollListener listener) {
+        listeners.remove(listener);
+    }
+	
+	public void notifyListeners() {
+		int[] values = getDiceValues();
+		// for Loop, in case of multiple listeners (in the future?)
+		for (DiceRollListener listener : listeners) {
+			listener.onDiceRolled(values);
 		}
 	}
 	
