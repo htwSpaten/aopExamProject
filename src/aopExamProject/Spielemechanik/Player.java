@@ -9,7 +9,7 @@ public class Player {
 	
 	public Player(String name, int id) 
 	{
-		this.name = name;
+		this.setName(name);
 		this.id = id;
 		//this.score = new Scoreboard();
 	}
@@ -20,5 +20,13 @@ public class Player {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
