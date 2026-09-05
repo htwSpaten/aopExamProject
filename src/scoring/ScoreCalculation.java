@@ -18,7 +18,7 @@ public class ScoreCalculation {
 	//values array für würfelergebnis
 	// counts array für wie oft augenzahl vorkommt
 	public static int calculateThreeOfAKind(int[] values) {
-		int[]counts = new int[7];//wegen1-6 augen
+		int[]counts = new int[6];//wegen1-6 augen
 		int sum = 0;
 		for (int v : values) { //hier jede zahl angucken
 			counts[v]++; //hier die vorkommen zählen
@@ -33,7 +33,7 @@ public class ScoreCalculation {
 		return 0;
 	}
 	public static int calculateFourOfAKind(int[] values) {
-		int[] counts = new int[7];
+		int[] counts = new int[6];
 		int sum = 0;
 		for (int v : values) {
 			counts[v]++;
@@ -47,7 +47,7 @@ public class ScoreCalculation {
 		return 0;
 	}
 	public static int calculateFullHouse(int[] values) {
-		int[] counts = new int[7];
+		int[] counts = new int[6];
 		for (int v : values) {
 			counts[v]++;
 		}
@@ -70,7 +70,7 @@ public class ScoreCalculation {
 	//da wusste ich im leben nicht mehr weiter, hab Ki gefragt 
 	//andere lösungsvorsätze die einafcher sind gerne erwünscht
 	public static int calculateSmallStraight(int[] values) {
-		int[] counts = new int[7]; 
+		int[] counts = new int[6]; 
 		for (int v : values) 
 			counts[v]++; 
 		//hier entweder 1234 || 2345 || 3456
@@ -87,7 +87,7 @@ public class ScoreCalculation {
 		return 0;
 	}
 	public static int calculateLargeStraight(int[] values) {
-		int[] counts = new int[7]; 
+		int[] counts = new int[6]; 
 		for (int v : values) 
 			counts[v]++; 
 		 
@@ -100,7 +100,7 @@ public class ScoreCalculation {
 		return 0;
 	}
 	public static int calculateYahtzee(int[] values) {
-		int[] counts = new int[7];
+		int[] counts = new int[6];
 		for (int v : values)
 			counts[v]++;
 		

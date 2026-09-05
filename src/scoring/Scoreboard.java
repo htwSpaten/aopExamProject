@@ -32,6 +32,12 @@ public class Scoreboard {
 			this.scores[i] = null;
 		}
 	}
+	public int getBonusScore() {
+		if (getUpperScore() >= 63) {
+			return 35;
+		}
+		return 0; 
+	}
 	public Integer[] getScore() {
 		return scores;
 	}
@@ -41,9 +47,9 @@ public class Scoreboard {
 			if (s != null) 
 				total += s;
 		}
+		total += getBonusScore();
 		return total;
 	}
-	//for Dennis
 	public int getUpperScore() {
 		int sum = 0; 
 		for (int i = ONES; i <= SIXES; i++) {
@@ -81,8 +87,5 @@ public class Scoreboard {
 				//punkte ins feld eintragen
 				this.scores[index] = points;
 			}
-		}
-		public void testCompat() {
-			assert true;
 		}
 }
