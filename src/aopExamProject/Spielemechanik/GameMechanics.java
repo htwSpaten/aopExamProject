@@ -2,6 +2,8 @@ package aopExamProject.Spielemechanik;
 
 import java.util.ArrayList;
 
+import aopExamProject.scoring.ScoreboardPanel;
+
 public class GameMechanics 
 {
 	private int currentIndex = 0;
@@ -19,10 +21,11 @@ public class GameMechanics
 		
 	}
 	
-	public void play() 
+	public void play(ScoreboardPanel playersScoreboard) 
 	{
 		currentIndex = 0;
-		
+		int[] dice= {1,1,1,1,1};
+		playersScoreboard.update(dice);
 		
 	}
 	
@@ -57,5 +60,8 @@ public class GameMechanics
 	public Player getCurrentPlayer() 
 	{
 		return knifflers.get(currentIndex);
+	}
+	public ArrayList<Player> getAllKnifflers(){
+		return knifflers;
 	}
 }

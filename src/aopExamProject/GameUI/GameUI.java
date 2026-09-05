@@ -6,6 +6,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import aopExamProject.Spielemechanik.*;
 import aopExamProject.dices.*;
@@ -96,11 +98,16 @@ public class GameUI
 		});
 		startButton.addActionListener(e-> {
 			if(game.getPlayerCount() >= 1) {
-				game.play();
+				
+				ArrayList<Player> knifflers = game.getAllKnifflers();
+				playersScoreboard = new ScoreboardPanel(knifflers);
+			
+				game.play(playersScoreboard);
+				
 				currentPlayer= game.getCurrentPlayer();
 				refreshName(currentPlayer);
 				scoreboard = currentPlayer.getScore();
-				playersScoreboard = new ScoreboardPanel(scoreboard);
+				
 				scoreboardContainer.add(playersScoreboard);
 				scoreboardContainer.revalidate();
 				scoreboardContainer.repaint();
@@ -110,7 +117,6 @@ public class GameUI
 				errorprint.setText("Nicht genug Spieler!");
 			}
 		});
-		
 		
 		panel.add(sidebar, BorderLayout.WEST);
 		panel.add(centerPanel, BorderLayout.CENTER);
