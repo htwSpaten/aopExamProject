@@ -9,6 +9,8 @@ import java.awt.Insets;
 import javax.swing.*;
 import aopExamProject.Spielemechanik.*;
 import aopExamProject.dices.*;
+import aopExamProject.scoring.Scoreboard;
+import aopExamProject.scoring.ScoreboardPanel;
 
 public class GameUI 
 {
@@ -17,12 +19,14 @@ public class GameUI
 	private CardLayout cards;
 	private JPanel container;
 	private JLabel label;
-	
+	private Player currentPlayer; //aktueller Spieler
+	private Scoreboard scoreboard; //scoreboard daten
+	private ScoreboardPanel playersScoreboard;  //ui aufruf
+	private JPanel scoreboardContainer; //platzhalter
 	public GameUI(GameMechanics game) 
 	{
 		this.game = game;
 		this.frame = new JFrame("Kniffel");
-		this.cards = new CardLayout();
 		this.label = new JLabel("Am Zug: - ");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1920, 1080);
@@ -33,10 +37,12 @@ public class GameUI
 	{
 		cards = new CardLayout();
 		container = new JPanel(cards);
+		scoreboardContainer = new JPanel(new BorderLayout(15,5));
+		scoreboardContainer.setPreferredSize(new Dimension(400, 0));
 		container.add(lobbyUI(), "menu");
 		container.add(playUI(), "game");
 		container.add(podiumUI(), "podest");
-		lobbyUI();
+		
 		frame.setContentPane(container);
 		frame.setVisible(true);
 	}
@@ -44,7 +50,7 @@ public class GameUI
 	public JPanel lobbyUI()
 	{
 		JPanel panel = new JPanel(new BorderLayout(15,5));
-		panel.setBackground(Color.GREEN);
+		panel.setBackground(Color.white);
 		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 		
 		
@@ -71,6 +77,12 @@ public class GameUI
 		startButton.setFont(startButton.getFont().deriveFont(20f));
 		startButton.setMargin(new Insets(15,40,15,40));
 		
+		JPanel topPanel = new JPanel(new BorderLayout());
+		JLabel errorprint = new JLabel();
+		errorprint.setHorizontalAlignment(SwingConstants.CENTER);
+		errorprint.setForeground(Color.red);
+		topPanel.add(errorprint, BorderLayout.NORTH);
+		
 		
 		addButton.addActionListener(e -> {
 			String name = nameField.getText().trim();
@@ -85,29 +97,50 @@ public class GameUI
 		startButton.addActionListener(e-> {
 			if(game.getPlayerCount() >= 1) {
 				game.play();
-				refreshName();
+				currentPlayer= game.getCurrentPlayer();
+				refreshName(currentPlayer);
+				scoreboard = currentPlayer.getScore();
+				playersScoreboard = new ScoreboardPanel(scoreboard);
+				scoreboardContainer.add(playersScoreboard);
+				scoreboardContainer.revalidate();
+				scoreboardContainer.repaint();
+				
 				cards.show(container, "game");
+			}else {
+				errorprint.setText("Nicht genug Spieler!");
 			}
 		});
 		
 		
 		panel.add(sidebar, BorderLayout.WEST);
 		panel.add(centerPanel, BorderLayout.CENTER);
+		centerPanel.add(topPanel);
+		
 		
 		return panel;
 	}
 	
 	private JPanel playUI() {
 		JPanel panel = new JPanel(new BorderLayout(15,5));
+		JButton change = new JButton("wechsel Spieler!");//testing
+		panel.add(change, BorderLayout.WEST);
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 		
-		panel.add(new JLabel("Platzhalter PLAYUI"), BorderLayout.CENTER);
+		
 		DiceCup cupUI = new DiceCup();
 		panel.add(cupUI.getPanel(), BorderLayout.SOUTH);
 		panel.add(label, BorderLayout.NORTH);
 		label.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(new JLabel("Scoreboard Platzhalter"), BorderLayout.EAST);
+		panel.add(scoreboardContainer, BorderLayout.EAST);
+		
+		change.addActionListener(e-> {
+			game.changePlayer();
+			currentPlayer = game.getCurrentPlayer();
+			refreshName(currentPlayer);
+		});
+		
+		
 		return panel;
 	}
 	private JPanel podiumUI() {
@@ -115,9 +148,7 @@ public class GameUI
 		panel.add(new JLabel("Platzhalter PodiumUI"), BorderLayout.CENTER);
 		return panel;
 	}
-	public void refreshName() {
-		Player currentPlayer = game.getCurrentPlayer();
+	public void refreshName(Player currentPlayer) {
 		label.setText("Am Zug: " + currentPlayer.getName() + " " +currentPlayer.getId());
-		
 	}
 }

@@ -1,4 +1,4 @@
-package scoring;
+package aopExamProject.scoring;
 //13 Felder und Wert "null" = leer und 0 = gestrichen
 public class Scoreboard {
 	//position vom array festlegen
@@ -82,7 +82,17 @@ public class Scoreboard {
 				this.scores[index] = points;
 			}
 		}
-		public void testCompat() {
-			assert true;
+		@Override
+		public String toString()
+		{
+		    StringBuilder sb = new StringBuilder();
+		    for (int i = 0; i < FIELD_COUNT; i++)
+		    {
+		        sb.append(fieldNames[i])
+		          .append(": ")
+		          .append(scores[i] == null ? "-" : scores[i])
+		          .append("\n");
+		    }
+		    return sb.toString();
 		}
 }
