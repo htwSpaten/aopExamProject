@@ -8,7 +8,8 @@ public class GameMechanics
 {
 	private int currentIndex = 0;
 	private int roundCounter = 0;
-	ArrayList<Player> knifflers;
+	private ArrayList<Player> knifflers;
+	private ScoreboardPanel playersScoreboard;
 	
 	public GameMechanics() {
 		this.knifflers = new ArrayList<Player>();
@@ -23,11 +24,10 @@ public class GameMechanics
 	
 	public void play(ScoreboardPanel playersScoreboard) 
 	{
-		currentIndex = 0;
-		int[] dice= {1,1,1,1,1};
-		playersScoreboard.update(dice);
-		
-	}
+			int[] dice= {1,1,1,1,1};
+			playersScoreboard.update(dice);
+			this.playersScoreboard=playersScoreboard;
+		}
 	
 	public void addPlayer(String name) 
 	{
@@ -46,7 +46,14 @@ public class GameMechanics
 	
 	public void changePlayer() 
 	{
+		// set the old current player to false
+		getCurrentPlayer().toggleIsCurrent();
+		// change Player
 		currentIndex = (currentIndex + 1) % knifflers.size();
+		// set the new current player to true
+		getCurrentPlayer().toggleIsCurrent();
+		playersScoreboard.changePlayer();
+		
 		if(currentIndex == 0) 
 		{
 			countRounds();
@@ -61,6 +68,7 @@ public class GameMechanics
 	{
 		return knifflers.get(currentIndex);
 	}
+	
 	public ArrayList<Player> getAllKnifflers(){
 		return knifflers;
 	}

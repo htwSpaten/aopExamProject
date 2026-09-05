@@ -13,10 +13,20 @@ import aopExamProject.Spielemechanik.Player;
 
 public class ScoreboardPanel extends JPanel {
 	private List<Scoreboard> boards;
-	private JLabel[] text;
 	private List<Player> knifflers;
+	private Player currentPlayer;
 	private String[] categories;
 	private Map<Player,Map<String,JLabel>> cells;
+	
+	private Player getCurrentPlayer() {
+		Player result= new Player("",0);
+		for(Player kniff : knifflers) {
+			if(kniff.getIsCurrent()) {
+				result= kniff;
+			} 
+		}
+		return result;
+	}
 	
 	public ScoreboardPanel(List<Player> kifflers) {
 		this.knifflers = kifflers;
@@ -24,6 +34,9 @@ public class ScoreboardPanel extends JPanel {
 		for(Player kniff : knifflers) {
 			boards.add(kniff.getScore());
 		}
+		
+		currentPlayer = getCurrentPlayer();
+		
 		
 		this.categories= boards.get(0).fieldNames;
 		this.cells= new HashMap<>();
@@ -39,6 +52,8 @@ public class ScoreboardPanel extends JPanel {
 			cells.put(p,new HashMap<>());
 		}
 		
+		
+		
 		//one row per category
 		for(String cat : categories) {
 			add(new JLabel(cat));
@@ -53,21 +68,26 @@ public class ScoreboardPanel extends JPanel {
 		}
 		
 	}
+	
+	public void changePlayer() {
+		currentPlayer = getCurrentPlayer();
+	}
 
 	//nach jedem wurf:
 	public void update(int[] dice) {
 		int[] possible = ScoreCalculation.getAllPossibleScores(dice); 
-		Player currentPlayer = knifflers.get(0);
+		
 		for (int i = 0; i < 13; i++) {
 			String category = categories[i];
 			JLabel valueLabel= cells.get(currentPlayer).get(category);
-			if (boards.get(0).getScore()[i] != null) {
-				
-				valueLabel.setText("" + boards.get(0).getScore()[i]);
+			Integer score = currentPlayer.getScore().getScore()[i];
+			if ( score != null) {
+				valueLabel.setText("" + score);
 			}
 			else {
 				valueLabel.setText("(" + possible[i] + ")");
 			}
 		}
 	}
+	
 }

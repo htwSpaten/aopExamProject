@@ -99,18 +99,20 @@ public class GameUI
 		startButton.addActionListener(e-> {
 			if(game.getPlayerCount() >= 1) {
 				
-				ArrayList<Player> knifflers = game.getAllKnifflers();
-				playersScoreboard = new ScoreboardPanel(knifflers);
-			
-				game.play(playersScoreboard);
-				
 				currentPlayer= game.getCurrentPlayer();
 				refreshName(currentPlayer);
+				currentPlayer.toggleIsCurrent();
 				scoreboard = currentPlayer.getScore();
+				
+				ArrayList<Player> knifflers = game.getAllKnifflers();
+				playersScoreboard = new ScoreboardPanel(knifflers);
 				
 				scoreboardContainer.add(playersScoreboard);
 				scoreboardContainer.revalidate();
 				scoreboardContainer.repaint();
+				
+				// needs the SB Panel with the correct player status
+				game.play(playersScoreboard);
 				
 				cards.show(container, "game");
 			}else {

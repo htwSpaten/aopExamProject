@@ -6,6 +6,7 @@ public class Player {
 	private String name;
 	private int id;
 	private Scoreboard scoreboard;
+	private boolean isCurrent;
 
 	
 	public Player(String name, int id) 
@@ -13,6 +14,7 @@ public class Player {
 		this.name = name;
 		this.id = id;
 		this.scoreboard = new Scoreboard();
+		this.isCurrent = false;
 	}
 
 	public int getId() {
@@ -27,7 +29,13 @@ public class Player {
 		return scoreboard;
 	}
 
+	public boolean getIsCurrent() {
+		return isCurrent;
+	}
 	
+	public void toggleIsCurrent() {
+		isCurrent = !isCurrent;
+	}
 	
 	
 }
