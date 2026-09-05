@@ -1,5 +1,6 @@
 package aopExamProject.dices;
 
+//TODO: awt correct or replace with swing elements?
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Random;
@@ -16,6 +17,7 @@ public class Dice implements ItemListener {
 	private final JPanel panel;
 	private final JCheckBox lockBox;
 	private final JLabel valueLabel;
+	private final DiceImage diceImage;
 
 	public Dice() {
 		locked = false;
@@ -23,13 +25,15 @@ public class Dice implements ItemListener {
 		
 		//create UI for a dice
 		valueLabel = new JLabel(String.valueOf(number));
-		lockBox = new JCheckBox("lock");
+		lockBox = new JCheckBox("");
 		lockBox.setSelected(locked);
 		lockBox.addItemListener(this);
+		lockBox.setEnabled(false);
+		diceImage = new DiceImage(number, lockBox);
 		
 		panel = new JPanel();
+		panel.add(diceImage);
 		panel.add(valueLabel);
-		panel.add(lockBox);
 	}
 
 	public int getValue() {
@@ -40,6 +44,7 @@ public class Dice implements ItemListener {
 		if(v>0 && v<=6) {
 			number = v;
 			valueLabel.setText(String.valueOf(number));
+			diceImage.setValue(number);
 		}
 	}
 	
@@ -58,9 +63,9 @@ public class Dice implements ItemListener {
 	public void rollDice() {
 		int v = random.nextInt(6)+1;
 		if (locked != true) {
-			// start roll dice animation
 			setValue(v);
 		}
+		lockBox.setEnabled(true);
 	}
 
 	@Override
@@ -68,6 +73,4 @@ public class Dice implements ItemListener {
 		setLocked();
 		
 	}
-	
-	// create roll dice animation
 }
