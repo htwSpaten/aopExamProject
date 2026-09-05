@@ -32,6 +32,7 @@ public class Scoreboard {
 			this.scores[i] = null;
 		}
 	}
+	
 	public Integer[] getScore() {
 		return scores;
 	}
@@ -43,7 +44,6 @@ public class Scoreboard {
 		}
 		return total;
 	}
-	//for Dennis
 	public int getUpperScore() {
 		int sum = 0; 
 		for (int i = ONES; i <= SIXES; i++) {

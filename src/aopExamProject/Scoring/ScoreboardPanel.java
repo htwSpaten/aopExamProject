@@ -32,9 +32,6 @@ public class ScoreboardPanel extends JPanel {
 		scoreUI.pack();
 		scoreUI.setVisible(true);
 	}
-	public void testCompat() {
-		assert true;
-	}
 	//nach jedem wurf:
 	public void update(int[] dice) {
 		int[] possible = ScoreCalculation.getAllPossibleScores(dice); 
