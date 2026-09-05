@@ -24,10 +24,13 @@ public class GameUI
 	private MenuUI menu;
 	private PlayingFieldUI playfield;
 	private PodiumUI podium;
-	private JPanel scoreboardContainer;
+	ArrayList<Player> kniffler;
+	private Player currentPlayer;
+	
 	public GameUI(GameMechanics game) 
 	{
 		this.game = game;
+		
 		this.frame = new JFrame("Kniffel");
 		this.label = new JLabel("Am Zug: - ");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,11 +42,35 @@ public class GameUI
 	{
 		cards = new CardLayout();
 		container = new JPanel(cards);
-		scoreboardContainer = new JPanel(new BorderLayout(15,5));
-		scoreboardContainer.setPreferredSize(new Dimension(400, 0));
-		container.add(menu = new MenuUI(), "menu");
-		container.add(playfield = new PlayingFieldUI(), "game");
-		container.add(podium = new PodiumUI(), "podest");
+		menu = new MenuUI();
+		kniffler = game.getAllKnifflers();
+		playfield = new PlayingFieldUI(kniffler);
+		podium = new PodiumUI();
+		
+		
+		menu.setOnAdd(name -> {
+			game.addPlayer(name);
+			menu.addPlayerToList(name);
+		});
+		menu.addOnPress(()-> {
+			if(game.getPlayerCount() >=1) {
+				game.play();
+				currentPlayer = game.getCurrentPlayer();
+				playfield.showPlayer(currentPlayer);
+				playfield.startGame();
+				
+				
+				cards.show(container, "game");
+				
+			}else {
+				menu.showError("------Keine Spieler vorhanden!-------");
+			}
+		});
+		
+		
+		container.add(menu, "menu");
+		container.add(playfield, "game");
+		container.add(podium , "podest");
 		
 		frame.setContentPane(container);
 		frame.setVisible(true);

@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.TextField;
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import javax.swing.BorderFactory;
@@ -26,7 +24,7 @@ public class MenuUI extends JPanel
 	private Consumer<String> onAdd;
 	private DefaultListModel<String>list;
 	private JLabel errorprint;
-	private TextField nameField;
+	private JTextField nameField;
 	
 	public void addOnPress(Runnable r) {
 		onPress = r;
@@ -49,7 +47,7 @@ public class MenuUI extends JPanel
 		scrollPane.setBorder(BorderFactory.createTitledBorder("Spieler"));
 		playerList.setVisibleRowCount(8);
 		
-		JTextField nameField = new JTextField(20);
+		nameField = new JTextField(20);
 		JButton addButton = new JButton("Spieler hinzufügen");
 		JPanel input = new JPanel(new BorderLayout(0,5));
 		input.add(nameField, BorderLayout.NORTH);
@@ -66,13 +64,11 @@ public class MenuUI extends JPanel
 		startButton.setFont(startButton.getFont().deriveFont(20f));
 		startButton.setMargin(new Insets(15,40,15,40));
 		
-		JPanel topPanel = new JPanel(new BorderLayout());
+		
 		errorprint = new JLabel();
 		errorprint.setHorizontalAlignment(SwingConstants.CENTER);
 		errorprint.setForeground(Color.red);
-		topPanel.add(errorprint, BorderLayout.NORTH);
-		
-		
+		this.add(errorprint, BorderLayout.NORTH);
 		
 		addButton.addActionListener(e -> 
 		{
@@ -87,7 +83,7 @@ public class MenuUI extends JPanel
 		
 		this.add(sidebar, BorderLayout.WEST);
 		this.add(centerPanel, BorderLayout.CENTER);
-		centerPanel.add(topPanel);
+		
 	}
 	public void addPlayerToList(String name) 
 	{

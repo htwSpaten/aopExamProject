@@ -22,12 +22,13 @@ public class GameMechanics
 		
 	}
 	
-	public void play(ScoreboardPanel playersScoreboard) 
+	public void play() 
 	{
-			int[] dice= {1,1,1,1,1};
-			playersScoreboard.update(dice);
-			this.playersScoreboard=playersScoreboard;
-		}
+			//int[] dice= {1,1,1,1,1};
+			//playersScoreboard.update(dice);
+			//this.playersScoreboard=playersScoreboard;
+			currentIndex = 0;
+	}
 	
 	public void addPlayer(String name) 
 	{
