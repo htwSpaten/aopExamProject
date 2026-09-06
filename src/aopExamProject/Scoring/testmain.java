@@ -1,5 +1,7 @@
 package aopExamProject.Scoring;
 
+import aopExamProject.Spielemechanik.GameMechanics;
+
 public class testmain {
 
 	public testmain() {
@@ -8,9 +10,10 @@ public class testmain {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
-		Scoreboard board = new Scoreboard();
-		ScoreboardPanel panel = new ScoreboardPanel(board);
+		GameMechanics game = new GameMechanics();
+		game.addPlayer("paul");
+
+		ScoreboardPanel panel = new ScoreboardPanel(game.getAllKnifflers());
 		
 		int[] dice = {1,1,1,1,1};
 		

@@ -60,4 +60,9 @@ public class GameMechanics
 	{
 		return knifflers.get(currentIndex);
 	}
+	
+
+	public ArrayList<Player> getAllKnifflers(){
+		return knifflers;
+	}
 }
