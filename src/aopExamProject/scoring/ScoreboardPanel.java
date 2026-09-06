@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 
 import aopExamProject.Spielemechanik.Player;
 
-public class ScoreboardPanel extends JFrame {
+public class ScoreboardPanel extends JPanel {
 	private List<Scoreboard> boards;
 	private List<Player> knifflers;
 	private Player currentPlayer;
@@ -33,7 +33,6 @@ public class ScoreboardPanel extends JFrame {
 	}
 	
 	public ScoreboardPanel(List<Player> kifflers) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(500, 500));
 		
 		this.knifflers = kifflers;
@@ -77,9 +76,6 @@ public class ScoreboardPanel extends JFrame {
 			}
 			
 		}
-		
-		pack();
-		setVisible(true);
 	}
 	
 	public void changePlayer() {
