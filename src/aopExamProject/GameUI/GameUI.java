@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 import aopExamProject.Spielemechanik.*;
 import aopExamProject.dices.*;
-import aopExamProject.scoring.Scoreboard;
-import aopExamProject.scoring.ScoreboardPanel;
+import aopExamProject.Scoring.Scoreboard;
+import aopExamProject.Scoring.ScoreboardPanel;
 
 public class GameUI 
 {

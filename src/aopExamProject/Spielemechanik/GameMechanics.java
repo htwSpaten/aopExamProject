@@ -3,6 +3,7 @@ package aopExamProject.Spielemechanik;
 import java.util.ArrayList;
 
 import aopExamProject.GameUI.*;
+import aopExamProject.Scoring.ScoreboardPanel;
 import aopExamProject.dices.DiceCup;
 import aopExamProject.dices.Scoreboard;
 

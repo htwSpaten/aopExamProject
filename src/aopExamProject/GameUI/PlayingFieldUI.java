@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 
 import aopExamProject.Spielemechanik.Player;
 import aopExamProject.dices.DiceCup;
-import aopExamProject.scoring.*;
+import aopExamProject.Scoring.*;
 
 
 public class PlayingFieldUI extends JPanel
@@ -54,7 +54,7 @@ public class PlayingFieldUI extends JPanel
 	{
 		playersScoreboard = new ScoreboardPanel(kniffler);
 		scoreboardContainer.add(playersScoreboard);
-		playersScoreboard.update(new int[] {1,1,1,1,1});
+		playersScoreboard.updatePossibleScore(new int[] {1,1,1,1,1});
 		scoreboardContainer.revalidate();
 		scoreboardContainer.repaint();
 	}

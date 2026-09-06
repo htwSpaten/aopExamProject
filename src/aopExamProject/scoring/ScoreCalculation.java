@@ -1,4 +1,4 @@
-package aopExamProject.scoring;
+package aopExamProject.Scoring;
 
 public class ScoreCalculation {
 
