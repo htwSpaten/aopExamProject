@@ -2,7 +2,9 @@ package aopExamProject.Spielemechanik;
 
 import java.util.ArrayList;
 
-import aopExamProject.scoring.ScoreboardPanel;
+import aopExamProject.GameUI.*;
+import aopExamProject.dices.DiceCup;
+import aopExamProject.dices.Scoreboard;
 
 public class GameMechanics 
 {
@@ -24,8 +26,11 @@ public class GameMechanics
 	
 	public void play() 
 	{
-			 
-			currentIndex = 0;
+		currentIndex = 0;
+		DiceCup cup = new DiceCup();
+		Scoreboard scoreboard = new Scoreboard();
+		cup.addDiceRollListener(scoreboard);
+		
 	}
 	
 	public void addPlayer(String name) 
@@ -45,14 +50,9 @@ public class GameMechanics
 	
 	public void changePlayer() 
 	{
-		// set the old current player to false
 		getCurrentPlayer().toggleIsCurrent();
-		// change Player
 		currentIndex = (currentIndex + 1) % knifflers.size();
-		// set the new current player to true
 		getCurrentPlayer().toggleIsCurrent();
-		//playersScoreboard.changePlayer();
-		
 		if(currentIndex == 0) 
 		{
 			countRounds();
@@ -68,6 +68,7 @@ public class GameMechanics
 		return knifflers.get(currentIndex);
 	}
 	
+
 	public ArrayList<Player> getAllKnifflers(){
 		return knifflers;
 	}

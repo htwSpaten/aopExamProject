@@ -1,5 +1,8 @@
 package aopExamProject.Spielemechanik;
-import aopExamProject.scoring.*;
+
+import aopExamProject.Scoring.Scoreboard;
+
+//import scoring;
 
 public class Player {
 
@@ -7,7 +10,6 @@ public class Player {
 	private int id;
 	private Scoreboard scoreboard;
 	private boolean isCurrent;
-
 	
 	public Player(String name, int id) 
 	{
@@ -21,14 +23,14 @@ public class Player {
 		return id;
 	}
 
-	public String getName() {
-		return name;
-	}
-	
 	public Scoreboard getScore() {
 		return scoreboard;
 	}
 
+	public String getName() {
+		return name;
+	}
+	
 	public boolean getIsCurrent() {
 		return isCurrent;
 	}
