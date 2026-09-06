@@ -3,6 +3,8 @@ package aopExamProject.Spielemechanik;
 import java.util.ArrayList;
 
 import aopExamProject.GameUI.*;
+import aopExamProject.dices.DiceCup;
+import aopExamProject.dices.Scoreboard;
 
 public class GameMechanics 
 {
@@ -24,7 +26,9 @@ public class GameMechanics
 	public void play() 
 	{
 		currentIndex = 0;
-		
+		DiceCup cup = new DiceCup();
+		Scoreboard scoreboard = new Scoreboard();
+		cup.addDiceRollListener(scoreboard);
 		
 	}
 	

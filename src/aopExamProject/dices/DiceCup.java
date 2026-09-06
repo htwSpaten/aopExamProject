@@ -1,13 +1,12 @@
 package aopExamProject.dices;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
@@ -20,32 +19,39 @@ public class DiceCup {
 	private JButton button;
 	private boolean debugOn;
 	private final JCheckBox debugBox;
-	//protected final JPanel cupUI; 
-	protected final JFrame cupUI;
+	protected final JPanel cupUI; 
 	
 	public DiceCup() {
+		cupUI = new JPanel();
+		cupUI.setLayout(new BorderLayout());
 		
-		//cupUI = new JPanel();
-		cupUI = new JFrame("Würfelbecher");
-		cupUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		cupUI.setLayout(new FlowLayout());
-		cupUI.setBackground(Color.GREEN);
-		
+		// "würfeln" button area left
+		JPanel rollPanel = new JPanel();
+		rollPanel.setLayout(new BorderLayout());
 		button = new JButton("würfeln");
-		debugBox = new JCheckBox("debug mode");
 		counterLabel = new JLabel(String.format("übrige Würfe: "));
 		
-		cupUI.add(button);
-		cupUI.add(debugBox);
-		cupUI.add(counterLabel);
+		rollPanel.add(button, BorderLayout.CENTER);
+		rollPanel.add(counterLabel, BorderLayout.SOUTH);
+		cupUI.add(rollPanel, BorderLayout.WEST);
 		
+		// dices area in center
+		JPanel dicePanel = new JPanel();
+		dicePanel.setLayout(new FlowLayout());
 		dices = new ArrayList<>();
 		for (int i = 0; i < 5; i++) {
 		    Dice dice = new Dice();
 			dices.add(dice);
-			cupUI.add(dice.getPanel());   
+			dicePanel.add(dice.getPanel());   
 		}
 		
+		cupUI.add(dicePanel, BorderLayout.CENTER);
+		
+		// debug option right
+		debugBox = new JCheckBox("debug mode");
+		cupUI.add(debugBox, BorderLayout.EAST);
+		
+		// listeners
 		debugBox.addItemListener(e -> {
 			debugOn = debugBox.isSelected();
 			toggleDicesDebug();
@@ -57,9 +63,6 @@ public class DiceCup {
 		});
 		
 		resetCup();
-		
-		cupUI.pack();
-		cupUI.setVisible(true);
 	}
 	
 	private int[] getDiceValues() {
@@ -127,8 +130,7 @@ public class DiceCup {
 	
 	public JPanel getPanel() 
 	{
-		//return cupUI;
-		return new JPanel();
+		return cupUI;
 	}
 
 }
