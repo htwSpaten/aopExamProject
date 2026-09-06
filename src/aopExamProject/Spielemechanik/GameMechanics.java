@@ -10,7 +10,8 @@ public class GameMechanics
 {
 	private int currentIndex = 0;
 	private int roundCounter = 0;
-	ArrayList<Player> knifflers;
+	private ArrayList<Player> knifflers;
+	private ScoreboardPanel playersScoreboard;
 	
 	public GameMechanics() {
 		this.knifflers = new ArrayList<Player>();
@@ -43,7 +44,7 @@ public class GameMechanics
 	public int countRounds() 
 	{
 		roundCounter += 1;
-		System.out.println(roundCounter);
+		//System.out.println(roundCounter);
 		return roundCounter;
 	}
 	
@@ -56,7 +57,7 @@ public class GameMechanics
 		{
 			countRounds();
 		}
-		
+		System.out.println(currentIndex);
 		
 	}
 	public int getPlayerCount() {

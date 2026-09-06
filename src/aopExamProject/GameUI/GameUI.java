@@ -6,9 +6,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import aopExamProject.Spielemechanik.*;
 import aopExamProject.dices.*;
+import aopExamProject.scoring.Scoreboard;
+import aopExamProject.scoring.ScoreboardPanel;
 
 public class GameUI 
 {
@@ -16,16 +20,19 @@ public class GameUI
 	private final JFrame frame;
 	private CardLayout cards;
 	private JPanel container;
-	private JLabel label;
+	private MenuUI menu;
+	private PlayingFieldUI playfield;
+	private PodiumUI podium;
+	ArrayList<Player> kniffler;
+	private Player currentPlayer;
 	
 	public GameUI(GameMechanics game) 
 	{
 		this.game = game;
+		
 		this.frame = new JFrame("Kniffel");
-		this.cards = new CardLayout();
-		this.label = new JLabel("Am Zug: - ");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1920, 1080);
+		frame.setSize(1280, 720);
 		
 	}
 	
@@ -33,91 +40,50 @@ public class GameUI
 	{
 		cards = new CardLayout();
 		container = new JPanel(cards);
-		container.add(lobbyUI(), "menu");
-		container.add(playUI(), "game");
-		container.add(podiumUI(), "podest");
-		lobbyUI();
+		menu = new MenuUI();
+		kniffler = game.getAllKnifflers();
+		playfield = new PlayingFieldUI(kniffler);
+		podium = new PodiumUI();
+		
+		
+		menu.setOnAdd(name -> {
+			game.addPlayer(name);
+			menu.addPlayerToList(name);
+		});
+		menu.addOnPress(()-> {
+			if(game.getPlayerCount() >=1) {
+				game.play();
+				currentPlayer = game.getCurrentPlayer();
+				playfield.refreshName(currentPlayer);
+				currentPlayer.toggleIsCurrent();
+				playfield.startGame();
+				
+				
+				cards.show(container, "game");
+				
+			}else {
+				menu.showError("------Keine Spieler vorhanden!-------");
+			}
+		});
+		playfield.ChangeOnPress(()-> 
+		{
+			game.changePlayer();
+			System.out.println("wechsle Spieler");
+			currentPlayer = game.getCurrentPlayer();
+			playfield.refreshName(currentPlayer);
+			System.out.println("Spieler gewechselt");
+		});
+		
+		
+		container.add(menu, "menu");
+		container.add(playfield, "game");
+		container.add(podium , "podest");
+		
 		frame.setContentPane(container);
 		frame.setVisible(true);
 	}
 	
-	public JPanel lobbyUI()
-	{
-		JPanel panel = new JPanel(new BorderLayout(15,5));
-		panel.setBackground(Color.GREEN);
-		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-		
-		
-		DefaultListModel<String> list = new DefaultListModel<>();
-		JList<String> playerList = new JList<>(list);
-		JScrollPane scrollPane = new JScrollPane(playerList);
-		scrollPane.setBorder(BorderFactory.createTitledBorder("Spieler"));
-		playerList.setVisibleRowCount(8);
-		
-		JTextField nameField = new JTextField(20);
-		JButton addButton = new JButton("Spieler hinzufügen");
-		JPanel input = new JPanel(new BorderLayout(0,5));
-		input.add(nameField, BorderLayout.NORTH);
-		input.add(addButton, BorderLayout.SOUTH);
-		
-		JPanel sidebar = new JPanel(new BorderLayout(0,5));
-		sidebar.setPreferredSize(new Dimension(220,0));
-		sidebar.add(scrollPane, BorderLayout.CENTER);
-		sidebar.add(input, BorderLayout.SOUTH);
-		
-		JButton startButton = new JButton("Spiel starten");
-		JPanel centerPanel = new JPanel(new GridBagLayout());
-		centerPanel.add(startButton);
-		startButton.setFont(startButton.getFont().deriveFont(20f));
-		startButton.setMargin(new Insets(15,40,15,40));
-		
-		
-		addButton.addActionListener(e -> {
-			String name = nameField.getText().trim();
-			if(!name.isEmpty()) 
-			{
-				game.addPlayer(name);
-				list.addElement(name);
-				nameField.setText("");
-				nameField.requestFocus();
-			}
-		});
-		startButton.addActionListener(e-> {
-			if(game.getPlayerCount() >= 1) {
-				game.play();
-				refreshName();
-				cards.show(container, "game");
-			}
-		});
-		
-		
-		panel.add(sidebar, BorderLayout.WEST);
-		panel.add(centerPanel, BorderLayout.CENTER);
-		
-		return panel;
-	}
 	
-	private JPanel playUI() {
-		JPanel panel = new JPanel(new BorderLayout(15,5));
-		panel.setBackground(Color.WHITE);
-		panel.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-		
-		panel.add(new JLabel("Platzhalter PLAYUI"), BorderLayout.CENTER);
-		DiceCup cupUI = new DiceCup();
-		panel.add(cupUI.getPanel(), BorderLayout.SOUTH);
-		panel.add(label, BorderLayout.NORTH);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(new JLabel("Scoreboard Platzhalter"), BorderLayout.EAST);
-		return panel;
-	}
-	private JPanel podiumUI() {
-		JPanel panel = new JPanel(new BorderLayout());
-		panel.add(new JLabel("Platzhalter PodiumUI"), BorderLayout.CENTER);
-		return panel;
-	}
-	public void refreshName() {
-		Player currentPlayer = game.getCurrentPlayer();
-		label.setText("Am Zug: " + currentPlayer.getName() + " " +currentPlayer.getId());
-		
-	}
+	
+	
 }

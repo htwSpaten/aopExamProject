@@ -38,6 +38,6 @@ public class Player {
 	public void toggleIsCurrent() {
 		isCurrent = !isCurrent;
 	}
-
+	
 	
 }
