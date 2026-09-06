@@ -49,7 +49,9 @@ public class GameMechanics
 	
 	public void changePlayer() 
 	{
+		getCurrentPlayer().toggleIsCurrent();
 		currentIndex = (currentIndex + 1) % knifflers.size();
+		getCurrentPlayer().toggleIsCurrent();
 		if(currentIndex == 0) 
 		{
 			countRounds();
@@ -63,5 +65,10 @@ public class GameMechanics
 	public Player getCurrentPlayer() 
 	{
 		return knifflers.get(currentIndex);
+	}
+	
+
+	public ArrayList<Player> getAllKnifflers(){
+		return knifflers;
 	}
 }

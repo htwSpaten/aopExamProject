@@ -18,56 +18,50 @@ public class Scoreboard {
 	
 	public static final int FIELD_COUNT = 13;
 	
-	public Integer [] scores; // hier Punkte oder 0
-	public String [] fieldNames; // hier name vom feld obviously
-	
-	public Scoreboard() {
-		this.scores = new Integer[FIELD_COUNT]; //Integer soll wohl Zahlen UND Zustand speichern
-		this.fieldNames = new String[FIELD_COUNT];
-		
-		initializeFieldNames();
-		
-		//ertsmal alle felder leer setzen war meine Überlegung
-		for (int i = 0; i < scores.length; i++) {
-			this.scores[i] = null;
+	public Integer [] scores = new Integer[FIELD_COUNT];; // hier Punkte oder 0
+	public String [] fieldNames = {"Einser","Zweier","Dreier","Vierer","Fünfer","Sechser","Dreierpasch","Viererpasch","Full House","Kleine Straße","Große Straße","Kniffel","Chance"};
+
+	public int getBonusScore() {
+		if (getUpperScore() >= 63) {
+			return 35;
 		}
+		return 0;
 	}
+
+	public int getLowerScore() {
+		int sum = 0; 
+		for (int i = THREE_OF_A_KIND; i <= CHANCE; i++) {
+			if (scores[i] != null) {
+				sum += scores[i]; 
+			}
+		}
+		return sum;
+	} 
+	
 	public Integer[] getScore() {
 		return scores;
 	}
+	
 	public int getTotalScore() {
 		int total = 0;
 		for (Integer s : scores) {
 			if (s != null) 
 				total += s;
-		}
+		} 
+		total += getBonusScore();
 		return total;
 	}
-	//for Dennis
+	
 	public int getUpperScore() {
 		int sum = 0; 
 		for (int i = ONES; i <= SIXES; i++) {
 			if (scores[i] != null) {
 				sum += scores[i];
-				}
 			}
-		return sum; 
 		}
-	public void initializeFieldNames() {
-		this.fieldNames[ONES] = "Einser";
-		this.fieldNames[TWOS] = "Zweier";
-		this.fieldNames[THREES] = "Dreier";
-		this.fieldNames[FOURS] = "Vierer";
-		this.fieldNames[FIVES] = "Fünfer";
-		this.fieldNames[SIXES] = "Sechser";
-		this.fieldNames[THREE_OF_A_KIND] = "Dreierpasch";
-		this.fieldNames[FOUR_OF_A_KIND] = "Viererpasch";
-		this.fieldNames[FULL_HOUSE] = "Full House";
-		this.fieldNames[SMALL_STRAIGHT] = "Kleine Straße";
-		this.fieldNames[LARGE_STRAIGHT] = "Große Straße";
-		this.fieldNames[YAHTZEE] = "Kniffel";
-		this.fieldNames[CHANCE] = "Chance";
+		return sum; 
 	}
+	
 	public boolean isFieldEmpty(int index) {
 		if (index >= 0 && index < scores.length) {
 			//prüft ob feld noch null ist 
@@ -75,14 +69,12 @@ public class Scoreboard {
 		}
 		return false; 
 	}
-		public void setScore(int index, int points) {
-			//prüfen ob nummer gültig
-			if (index >= 0 && index < scores.length) {
-				//punkte ins feld eintragen
-				this.scores[index] = points;
-			}
+	
+	public void setScore(int index, int points) {
+		//prüfen ob nummer gültig
+		if (index >= 0 && index < scores.length) {
+			//punkte ins feld eintragen
+			this.scores[index] = points;
 		}
-		public void testCompat() {
-			assert true;
-		}
+	}
 }
