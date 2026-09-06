@@ -1,58 +1,54 @@
 package aopExamProject.dices;
 
-//TODO: awt correct or replace with swing elements?
+import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Random;
 
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
 public class Dice implements ItemListener {
+	private static final int SIZE = 150;
 	private int number;
 	private boolean locked;
 	private final Random random = new Random();
 	
 	private final JPanel panel;
 	private final JCheckBox lockBox;
-	private final JLabel valueLabel;
 	private final DiceImage diceImage;
+	private final JSlider slider;
 
 	public Dice() {
-		locked = false;
-		number = 0;
+		panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel,BoxLayout.Y_AXIS));
+		panel.setPreferredSize(new Dimension(SIZE, SIZE));
 		
-		//create UI for a dice
-		valueLabel = new JLabel(String.valueOf(number));
 		lockBox = new JCheckBox("");
-		lockBox.setSelected(locked);
-		lockBox.addItemListener(this);
-		lockBox.setEnabled(false);
+		slider = new JSlider(1,6);
 		diceImage = new DiceImage(number, lockBox);
 		
-		panel = new JPanel();
+		resetDice();
+		
+		lockBox.addItemListener(this);
+		
+		slider.addChangeListener(e -> {
+			setValue(slider.getValue());
+			lockBox.setEnabled(true);
+		});
+		
 		panel.add(diceImage);
-		panel.add(valueLabel);
+		panel.add(slider);
 	}
 
 	public int getValue() {
 		return number;
 	}
 	
-	public void setValue(int v) {
-		if(v>0 && v<=6) {
-			number = v;
-			valueLabel.setText(String.valueOf(number));
-			diceImage.setValue(number);
-		}
-	}
-	
-	public boolean getLocked() {
-		return locked;
-	}
-	
-	public void setLocked() {
+	@Override
+	public void itemStateChanged(ItemEvent e) {
 		locked = !locked;
 	}
 	
@@ -67,10 +63,30 @@ public class Dice implements ItemListener {
 		}
 		lockBox.setEnabled(true);
 	}
-
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		setLocked();
-		
+	
+	public void toggleDebug(boolean debugOn) {		
+		slider.setVisible(debugOn);
+		if(number==0 && debugOn) {
+			setValue(getSliderValue());
+		}
+	}
+	
+	public void resetDice() {
+		setValue(0);
+		locked=false;
+		lockBox.setSelected(locked);
+		lockBox.setEnabled(false);
+		slider.setVisible(false);
+	}
+	
+	private void setValue(int v) {
+		if(v>=0 && v<=6) {
+			number = v;
+			diceImage.setValue(number);
+		}
+	}
+	
+	private int getSliderValue() {
+		return slider.getValue();
 	}
 }

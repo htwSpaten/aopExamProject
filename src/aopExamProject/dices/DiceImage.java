@@ -11,7 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 public class DiceImage extends JPanel {
-	private static final int SIZE = 60;
+	private static final int SIZE = 100;
 	private int value;
 	private JCheckBox lockBox;
 	
@@ -27,12 +27,21 @@ public class DiceImage extends JPanel {
 	
 	public void setValue(int v) {
 		value = v;
-		repaint(); // triggers paint component (need a source?)
+		repaint(); // triggers paintComponent
 	}
 	
+	// to let the Dice JPanel know, what size the DiceImage needs
 	@Override
 	public Dimension getPreferredSize() { //get source for that!!
 		return new Dimension(SIZE,SIZE);
+	}
+	@Override
+	public Dimension getMinimumSize() {
+	    return new Dimension(SIZE, SIZE);
+	}
+	@Override
+	public Dimension getMaximumSize() {
+	    return new Dimension(SIZE, SIZE);
 	}
 	
 	@Override
@@ -50,10 +59,10 @@ public class DiceImage extends JPanel {
 		
 		List<Integer> putPointAt = new ArrayList<>();
 		
-		// dice image as a 3X3 grid:
-		// 1 2 3
-		// 4 5 6
-		// 7 8 9
+		// dice image as a 3X3 grid:            e.g. five:
+		// 1 2 3								x(1)   x(3)
+		// 4 5 6								    x(5)
+		// 7 8 9								x(7)   x(9)
 		switch(value) {
 			case 1: putPointAt.add(5);
 			    break;
@@ -92,7 +101,7 @@ public class DiceImage extends JPanel {
 		
 	}
 	
-	public void drawPoint(int i, Graphics2D g2, int width, int height) {
+	private void drawPoint(int i, Graphics2D g2, int width, int height) {
 		
 		int sizePoint = width/5;
 		int xCenter = width/2-sizePoint/2;
@@ -132,7 +141,4 @@ public class DiceImage extends JPanel {
 			break;
 		}
 	}
-	
-	// create roll dice animation
-
 }
