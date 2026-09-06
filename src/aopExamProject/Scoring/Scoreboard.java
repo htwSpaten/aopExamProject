@@ -18,28 +18,16 @@ public class Scoreboard {
 	
 	public static final int FIELD_COUNT = 13;
 	
-	public Integer [] scores; // hier Punkte oder 0
-	public String [] fieldNames; // hier name vom feld obviously
-	
-	public Scoreboard() {
-		this.scores = new Integer[FIELD_COUNT]; //Integer soll wohl Zahlen UND Zustand speichern
-		this.fieldNames = new String[FIELD_COUNT];
-		
-		initializeFieldNames();
-		
-		//ertsmal alle felder leer setzen war meine Überlegung
-		for (int i = 0; i < scores.length; i++) {
-			this.scores[i] = null;
-		}
-	}
-	// neu
+	public Integer [] scores = new Integer[FIELD_COUNT];; // hier Punkte oder 0
+	public String [] fieldNames = {"Einser","Zweier","Dreier","Vierer","Fünfer","Sechser","Dreierpasch","Viererpasch","Full House","Kleine Straße","Große Straße","Kniffel","Chance"};
+
 	public int getBonusScore() {
 		if (getUpperScore() >= 63) {
 			return 35;
 		}
 		return 0;
 	}
-	//neu 
+
 	public int getLowerScore() {
 		int sum = 0; 
 		for (int i = THREE_OF_A_KIND; i <= CHANCE; i++) {
@@ -49,9 +37,11 @@ public class Scoreboard {
 		}
 		return sum;
 	} 
+	
 	public Integer[] getScore() {
 		return scores;
 	}
+	
 	public int getTotalScore() {
 		int total = 0;
 		for (Integer s : scores) {
@@ -61,18 +51,17 @@ public class Scoreboard {
 		total += getBonusScore();
 		return total;
 	}
+	
 	public int getUpperScore() {
 		int sum = 0; 
 		for (int i = ONES; i <= SIXES; i++) {
 			if (scores[i] != null) {
 				sum += scores[i];
-				}
 			}
-		return sum; 
 		}
-	public void initializeFieldNames() {
-		String[] names = {"Einser","Zweier","Dreier","Vierer","Fünfer","Sechser","Dreierpasch","Viererpasch","Full House","Kleine Straße","Große Straße","Kniffel","Chance"};
+		return sum; 
 	}
+	
 	public boolean isFieldEmpty(int index) {
 		if (index >= 0 && index < scores.length) {
 			//prüft ob feld noch null ist 
@@ -80,11 +69,12 @@ public class Scoreboard {
 		}
 		return false; 
 	}
-		public void setScore(int index, int points) {
-			//prüfen ob nummer gültig
-			if (index >= 0 && index < scores.length) {
-				//punkte ins feld eintragen
-				this.scores[index] = points;
-			}
+	
+	public void setScore(int index, int points) {
+		//prüfen ob nummer gültig
+		if (index >= 0 && index < scores.length) {
+			//punkte ins feld eintragen
+			this.scores[index] = points;
 		}
+	}
 }

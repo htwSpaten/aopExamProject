@@ -16,6 +16,7 @@ public class Player {
 		this.name = name;
 		this.id = id;
 		this.scoreboard = new Scoreboard();
+		this.isCurrent = false;
 	}
 
 	public int getId() {

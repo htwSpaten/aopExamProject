@@ -12,8 +12,7 @@ import javax.swing.JPanel;
 
 import aopExamProject.Spielemechanik.Player;
 
-public class ScoreboardPanel extends JPanel {
-	protected final JFrame scoreUI;
+public class ScoreboardPanel extends JFrame {
 	private List<Scoreboard> boards;
 	private List<Player> knifflers;
 	private Player currentPlayer;
@@ -31,8 +30,7 @@ public class ScoreboardPanel extends JPanel {
 	}
 	
 	public ScoreboardPanel(List<Player> kifflers) {
-		scoreUI = new JFrame("Würfelbecher");
-		scoreUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		this.knifflers = kifflers;
 		this.boards = new ArrayList<>();
@@ -69,8 +67,8 @@ public class ScoreboardPanel extends JPanel {
 			
 		}
 		
-		scoreUI.pack();
-		scoreUI.setVisible(true);
+		pack();
+		setVisible(true);
 	}
 	
 	public void changePlayer() {
