@@ -20,11 +20,11 @@ public class ScoreboardPanel extends JPanel {
 		this.text = new JLabel[13];
 		//13 Zeilen, zwei spalten erstmal
 		scoreUI.setLayout(new GridLayout(13, 2));
-		String[] name = {
+		String[] names = {
 				"Einser", "Zweier", "Dreier", "Vierer", "FÜnfer", "Sechser", "Dreierpasch", "Viererpasch", "Full House", "Kleine Straße", "Große Straße", "Kniffel", "Chance"
 		};
 		for (int i = 0; i < 13; i++) {
-			scoreUI.add(new JLabel(name[i])); //links
+			scoreUI.add(new JLabel(names[i])); //links
 			text[i] = new JLabel("-"); //rechts
 			scoreUI.add(text[i]);
 		}

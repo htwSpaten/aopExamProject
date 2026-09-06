@@ -32,7 +32,23 @@ public class Scoreboard {
 			this.scores[i] = null;
 		}
 	}
-	
+	// neu
+	public int getBonusScore() {
+		if (getUpperScore() >= 63) {
+			return 35;
+		}
+		return 0;
+	}
+	//neu 
+	public int getLowerScore() {
+		int sum = 0; 
+		for (int i = THREE_OF_A_KIND; i <= CHANCE; i++) {
+			if (scores[i] != null) {
+				sum += scores[i]; 
+			}
+		}
+		return sum;
+	} 
 	public Integer[] getScore() {
 		return scores;
 	}
@@ -41,7 +57,8 @@ public class Scoreboard {
 		for (Integer s : scores) {
 			if (s != null) 
 				total += s;
-		}
+		} 
+		total += getBonusScore();
 		return total;
 	}
 	public int getUpperScore() {
@@ -54,19 +71,7 @@ public class Scoreboard {
 		return sum; 
 		}
 	public void initializeFieldNames() {
-		this.fieldNames[ONES] = "Einser";
-		this.fieldNames[TWOS] = "Zweier";
-		this.fieldNames[THREES] = "Dreier";
-		this.fieldNames[FOURS] = "Vierer";
-		this.fieldNames[FIVES] = "Fünfer";
-		this.fieldNames[SIXES] = "Sechser";
-		this.fieldNames[THREE_OF_A_KIND] = "Dreierpasch";
-		this.fieldNames[FOUR_OF_A_KIND] = "Viererpasch";
-		this.fieldNames[FULL_HOUSE] = "Full House";
-		this.fieldNames[SMALL_STRAIGHT] = "Kleine Straße";
-		this.fieldNames[LARGE_STRAIGHT] = "Große Straße";
-		this.fieldNames[YAHTZEE] = "Kniffel";
-		this.fieldNames[CHANCE] = "Chance";
+		String[] names = {"Einser","Zweier","Dreier","Vierer","Fünfer","Sechser","Dreierpasch","Viererpasch","Full House","Kleine Straße","Große Straße","Kniffel","Chance"};
 	}
 	public boolean isFieldEmpty(int index) {
 		if (index >= 0 && index < scores.length) {
@@ -81,8 +86,5 @@ public class Scoreboard {
 				//punkte ins feld eintragen
 				this.scores[index] = points;
 			}
-		}
-		public void testCompat() {
-			assert true;
 		}
 }
