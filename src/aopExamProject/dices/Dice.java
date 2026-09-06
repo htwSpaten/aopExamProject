@@ -75,8 +75,8 @@ public class Dice implements ItemListener {
 		setValue(0);
 		locked=false;
 		lockBox.setSelected(locked);
-		lockBox.setEnabled(false);
-		slider.setVisible(false);
+		lockBox.setEnabled(false); // before first dice roll the dice shoudn't be lockable
+		slider.setVisible(false); // should only be visible in debug mode
 	}
 	
 	private void setValue(int v) {
