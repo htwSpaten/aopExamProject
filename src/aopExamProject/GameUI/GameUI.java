@@ -20,7 +20,6 @@ public class GameUI
 	private final JFrame frame;
 	private CardLayout cards;
 	private JPanel container;
-	private JLabel label;
 	private MenuUI menu;
 	private PlayingFieldUI playfield;
 	private PodiumUI podium;
@@ -32,9 +31,8 @@ public class GameUI
 		this.game = game;
 		
 		this.frame = new JFrame("Kniffel");
-		this.label = new JLabel("Am Zug: - ");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1920, 1080);
+		frame.setSize(1280, 720);
 		
 	}
 	
@@ -56,7 +54,8 @@ public class GameUI
 			if(game.getPlayerCount() >=1) {
 				game.play();
 				currentPlayer = game.getCurrentPlayer();
-				playfield.showPlayer(currentPlayer);
+				playfield.refreshName(currentPlayer);
+				currentPlayer.toggleIsCurrent();
 				playfield.startGame();
 				
 				
@@ -65,6 +64,14 @@ public class GameUI
 			}else {
 				menu.showError("------Keine Spieler vorhanden!-------");
 			}
+		});
+		playfield.ChangeOnPress(()-> 
+		{
+			game.changePlayer();
+			System.out.println("wechsle Spieler");
+			currentPlayer = game.getCurrentPlayer();
+			playfield.refreshName(currentPlayer);
+			System.out.println("Spieler gewechselt");
 		});
 		
 		
@@ -78,7 +85,5 @@ public class GameUI
 	
 	
 	
-	public void refreshName(Player currentPlayer) {
-		label.setText("Am Zug: " + currentPlayer.getName() + " " +currentPlayer.getId());
-	}
+	
 }

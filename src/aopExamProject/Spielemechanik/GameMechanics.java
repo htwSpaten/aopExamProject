@@ -24,9 +24,7 @@ public class GameMechanics
 	
 	public void play() 
 	{
-			//int[] dice= {1,1,1,1,1};
-			//playersScoreboard.update(dice);
-			//this.playersScoreboard=playersScoreboard;
+			 
 			currentIndex = 0;
 	}
 	
@@ -53,7 +51,7 @@ public class GameMechanics
 		currentIndex = (currentIndex + 1) % knifflers.size();
 		// set the new current player to true
 		getCurrentPlayer().toggleIsCurrent();
-		playersScoreboard.changePlayer();
+		//playersScoreboard.changePlayer();
 		
 		if(currentIndex == 0) 
 		{
