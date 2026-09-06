@@ -1,7 +1,9 @@
 package aopExamProject.Scoring;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,6 +23,7 @@ public class ScoreboardPanel extends JPanel {
 	private String[] categories;
 	private Map<Player,Map<String,JPanel>> cells;
 	private ScoreSubmitListener submitListener;
+	private List<JLabel> headerLabels;
 	
 	private Player getCurrentPlayer() {
 		for(Player kniff : knifflers) {
@@ -30,6 +32,21 @@ public class ScoreboardPanel extends JPanel {
 			} 
 		}
 		throw new IllegalStateException("No current player set");
+	}
+	
+	private void highlightCurrentPlayer() {
+		this.headerLabels = new ArrayList<>();
+		for (int i = 0; i < knifflers.size(); i++) {
+			JLabel header = headerLabels.get(i);
+			if (knifflers.get(i) == currentPlayer) {
+				header.setFont(header.getFont().deriveFont(Font.BOLD));
+				header.setForeground(Color.PINK);
+			}
+			else {
+				header.setFont(header.getFont().deriveFont(Font.PLAIN));
+				header.setForeground(null);
+			}
+		}
 	}
 	
 	public ScoreboardPanel(List<Player> kifflers) {
@@ -80,6 +97,7 @@ public class ScoreboardPanel extends JPanel {
 	
 	public void changePlayer() {
 		currentPlayer = getCurrentPlayer();
+		highlightCurrentPlayer();
 	}
 	
 	//nach jedem wurf:
