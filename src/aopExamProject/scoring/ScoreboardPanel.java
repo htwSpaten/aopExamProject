@@ -53,11 +53,7 @@ public class ScoreboardPanel extends JPanel {
 	
 	public ScoreboardPanel(List<Player> kifflers) {
 		setPreferredSize(new Dimension(500, 500));
-		//setLayout(new BorderLayout());
 		//https://dbs.cs.uni-duesseldorf.de/lehre/docs/java/javabuch/html/k100155.html
-		JLabel bigtitle = new JLabel("KNIFFEL");
-		bigtitle.setFont(new Font("Comic Sans MS", Font.BOLD + Font.ITALIC, 22));
-		add(bigtitle);
 		
 		this.setBackground(Color.lightGray);
 		this.knifflers = kifflers;
@@ -77,6 +73,9 @@ public class ScoreboardPanel extends JPanel {
 		setLayout(new GridLayout(rows, cols));
 		
 		// head row
+		JLabel bigtitle = new JLabel("KNIFFEL");
+		bigtitle.setFont(new Font("Comic Sans MS", Font.BOLD + Font.ITALIC, 22));
+		add(bigtitle);
 		add(new JLabel("")); // top left corner, empty
 		
 		for (Player p : knifflers) {
