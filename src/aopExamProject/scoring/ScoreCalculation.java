@@ -118,7 +118,7 @@ public class ScoreCalculation {
 		return sum;
 	}
 	public static int[] getAllPossibleScores(int[] dice) {
-		int[] result = new int[20];
+		int[] result = new int[Scoreboard.FIELD_COUNT];
 		result[Scoreboard.ONES] = calculateUpper(dice, 1);
 		result[Scoreboard.TWOS] = calculateUpper(dice, 2);
 		result[Scoreboard.THREES] = calculateUpper(dice, 3);

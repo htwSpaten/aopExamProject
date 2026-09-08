@@ -66,9 +66,6 @@ public class Scoreboard {
 		return getFinalUpperScore() + getLowerScore();
 	}
 	
-	public boolean isSumField(int index) {
-		return index == UPPER_SCORE || BONUS_SCORE || FINAL_UPPER_SCORE || LOWER_SCORE || FINAL_UPPER_SCORE_2 || TOTAL_SCORE;
-	}
 	public boolean isFieldEmpty(int index) {
 		if (index >= 0 && index < scores.length) {
 			//prüft ob feld noch null ist 

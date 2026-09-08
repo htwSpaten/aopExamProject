@@ -37,7 +37,7 @@ public class ScoreboardPanel extends JPanel {
 	}
 	
 	private void highlightCurrentPlayer() {
-		this.headerLabels = new ArrayList<>();
+		this.headerLabels = new ArrayList<>();//
 		for (int i = 0; i < knifflers.size(); i++) {
 			JLabel header = headerLabels.get(i);
 			if (knifflers.get(i) == currentPlayer) {
@@ -53,11 +53,11 @@ public class ScoreboardPanel extends JPanel {
 	
 	public ScoreboardPanel(List<Player> kifflers) {
 		setPreferredSize(new Dimension(500, 500));
-		setLayout(new BorderLayout());
+		//setLayout(new BorderLayout());
 		//https://dbs.cs.uni-duesseldorf.de/lehre/docs/java/javabuch/html/k100155.html
 		JLabel bigtitle = new JLabel("KNIFFEL");
 		bigtitle.setFont(new Font("Comic Sans MS", Font.BOLD + Font.ITALIC, 22));
-		add(bigtitle, BorderLayout.NORTH);
+		add(bigtitle);
 		
 		this.setBackground(Color.lightGray);
 		this.knifflers = kifflers;
