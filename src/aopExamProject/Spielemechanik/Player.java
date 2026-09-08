@@ -1,6 +1,6 @@
 package aopExamProject.Spielemechanik;
 
-import aopExamProject.Scoring.Scoreboard;
+import aopExamProject.scoring.Scoreboard;
 
 //import scoring;
 

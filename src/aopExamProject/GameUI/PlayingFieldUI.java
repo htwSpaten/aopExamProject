@@ -2,10 +2,8 @@ package aopExamProject.GameUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -14,9 +12,9 @@ import javax.swing.SwingConstants;
 
 import aopExamProject.Spielemechanik.Player;
 import aopExamProject.dices.DiceCup;
-import aopExamProject.Scoring.*;
+import aopExamProject.scoring.*;
 
-
+// keine Listener! WEIL PLAYER FEHLT!
 public class PlayingFieldUI extends JPanel
 {
 	private Runnable onPress;
@@ -24,14 +22,15 @@ public class PlayingFieldUI extends JPanel
 	private JPanel scoreboardContainer;
 	private JLabel playerStatus;
 	private ScoreboardPanel playersScoreboard;
-	private ArrayList<Player> kniffler;
-	public PlayingFieldUI(ArrayList<Player> kniffler)
+	private DiceCup cupUI;
+	private ArrayList<Player> knifflers;
+	public PlayingFieldUI(ArrayList<Player> knifflers)
 	{
 		setLayout(new BorderLayout(15,5));
 		scoreboardContainer = new JPanel(new BorderLayout(15,5));
-		scoreboardContainer.setPreferredSize(new Dimension(400, 0));
+		scoreboardContainer.setPreferredSize(new Dimension(1000, 400));
 		
-		this.kniffler = kniffler;
+		this.knifflers = knifflers;
 		
 		this.playerStatus = new JLabel("-");
 		this.add(playerStatus, BorderLayout.NORTH);
@@ -40,8 +39,6 @@ public class PlayingFieldUI extends JPanel
 		this.add(change, BorderLayout.WEST);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-		DiceCup cupUI = new DiceCup();
-		this.add(cupUI.getPanel(), BorderLayout.SOUTH);
 		this.add(scoreboardContainer, BorderLayout.EAST);
 		
 		
@@ -52,17 +49,29 @@ public class PlayingFieldUI extends JPanel
 
 	public void startGame() 
 	{
-		playersScoreboard = new ScoreboardPanel(kniffler);
+		playersScoreboard = new ScoreboardPanel(knifflers);
 		scoreboardContainer.add(playersScoreboard);
-		playersScoreboard.updatePossibleScore(new int[] {1,1,1,1,1});
-		scoreboardContainer.revalidate();
-		scoreboardContainer.repaint();
+		cupUI = new DiceCup();
+		this.add(cupUI.getPanel(), BorderLayout.SOUTH);
+		cupUI.addDiceRollListener(playersScoreboard);
+		
 	}
+	
+	public ScoreboardPanel getPanel() 
+	{
+		
+		return playersScoreboard;
+	}
+	public DiceCup getDiceCup() 
+	{
+		return cupUI;
+	}
+	
+	
 	public void refreshName(Player currentPlayer) {
 		playerStatus.setText("Am Zug: " + currentPlayer.getName() + " " +currentPlayer.getId());
-		if (playersScoreboard != null) {
-			playersScoreboard.changePlayer();
-		}
+		
+		
 	}
 	public void ChangeOnPress(Runnable r) {
 		onPress = r;

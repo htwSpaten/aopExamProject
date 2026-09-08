@@ -1,21 +1,33 @@
 package aopExamProject.Spielemechanik;
 
 import java.util.ArrayList;
-
-import aopExamProject.GameUI.*;
-import aopExamProject.Scoring.ScoreboardPanel;
 import aopExamProject.dices.DiceCup;
-import aopExamProject.dices.Scoreboard;
+import aopExamProject.scoring.ScoreSubmitListener;
+import aopExamProject.scoring.ScoreboardPanel;
 
-public class GameMechanics 
+public class GameMechanics implements ScoreSubmitListener
 {
 	private int currentIndex = 0;
 	private int roundCounter = 0;
+	private DiceCup cup;
+	private ScoreboardPanel board;
 	private ArrayList<Player> knifflers;
-	private ScoreboardPanel playersScoreboard;
 	
+	@Override
+	public void onScoreSubmit() 
+	{
+		changePlayer();
+		board.changePlayer();
+		cup.resetCup();
+	}
 	public GameMechanics() {
 		this.knifflers = new ArrayList<Player>();
+	}
+	
+	public void setPanelAndDice(DiceCup cup, ScoreboardPanel board) 
+	{
+		this.cup = cup;
+		this.board = board;
 	}
 	
 	public void gameSetup() 
@@ -28,10 +40,6 @@ public class GameMechanics
 	public void play() 
 	{
 		currentIndex = 0;
-		DiceCup cup = new DiceCup();
-		Scoreboard scoreboard = new Scoreboard();
-		cup.addDiceRollListener(scoreboard);
-		
 	}
 	
 	public void addPlayer(String name) 
@@ -58,7 +66,7 @@ public class GameMechanics
 		{
 			countRounds();
 		}
-		System.out.println(currentIndex);
+		
 		
 	}
 	public int getPlayerCount() {

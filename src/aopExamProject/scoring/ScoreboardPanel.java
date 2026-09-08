@@ -1,30 +1,28 @@
-package aopExamProject.Scoring;
+package aopExamProject.scoring;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import aopExamProject.Spielemechanik.Player;
+import aopExamProject.dices.DiceRollListener;
 
-public class ScoreboardPanel extends JPanel {
+public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	private List<Scoreboard> boards;
 	private List<Player> knifflers;
 	private Player currentPlayer;
 	private String[] categories;
 	private Map<Player,Map<String,JPanel>> cells;
-	private ScoreSubmitListener submitListener;
+	private List<ScoreSubmitListener> submitListeners = new ArrayList<>();
 	private List<JLabel> headerLabels;
 	
 	private Player getCurrentPlayer() {
@@ -52,7 +50,7 @@ public class ScoreboardPanel extends JPanel {
 	}
 	
 	public ScoreboardPanel(List<Player> kifflers) {
-		setPreferredSize(new Dimension(500, 500));
+		setPreferredSize(new Dimension(1000, 1000));
 		//https://dbs.cs.uni-duesseldorf.de/lehre/docs/java/javabuch/html/k100155.html
 		
 		this.setBackground(Color.lightGray);
@@ -70,7 +68,7 @@ public class ScoreboardPanel extends JPanel {
 		
 		int cols = knifflers.size() + 2; // +1 for category-name col
 		int rows = categories.length + 1; // +1 for header row
-		setLayout(new GridLayout(rows, cols));
+		setLayout(new GridLayout(rows, cols, 0, 10));
 		
 		// head row
 		JLabel bigtitle = new JLabel("KNIFFEL");
@@ -92,9 +90,11 @@ public class ScoreboardPanel extends JPanel {
 
 		
 			for( Player p : knifflers) {
-				JPanel wrapper = new JPanel(new FlowLayout());
+				JPanel wrapper = new JPanel(new GridLayout(2,1));
 				JLabel valueLabel = new JLabel("-");
+				valueLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				JButton submitButton = new JButton("submit");
+				
 				
 				cells.get(p).put(cat, wrapper);
 				
@@ -108,7 +108,7 @@ public class ScoreboardPanel extends JPanel {
 	
 	public void changePlayer() {
 		currentPlayer = getCurrentPlayer();
-		highlightCurrentPlayer();
+		//highlightCurrentPlayer();
 	}
 	
 	//nach jedem wurf:
@@ -163,12 +163,23 @@ public class ScoreboardPanel extends JPanel {
 	}
 	
 	public void addScoreSubmitListener(ScoreSubmitListener listener) {
-		this.submitListener = listener;
+		this.submitListeners.add(listener);
 	}
 	
 	private void handleSubmit() {
 		updateActualScore();
-		submitListener.onScoreSubmit();
+		for(ScoreSubmitListener listener : submitListeners ) 
+		{
+			listener.onScoreSubmit();
+		}
+		//changePlayer();
+		
+		
+	}
+	@Override
+	public void onDiceRolled(int[] dices) 
+	{
+		updatePossibleScore(dices);
 	}
 
 }

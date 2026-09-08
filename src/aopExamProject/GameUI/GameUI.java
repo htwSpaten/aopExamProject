@@ -1,20 +1,12 @@
 package aopExamProject.GameUI;
-
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.util.ArrayList;
-
 import javax.swing.*;
 import aopExamProject.Spielemechanik.*;
-import aopExamProject.dices.*;
-import aopExamProject.Scoring.Scoreboard;
-import aopExamProject.Scoring.ScoreboardPanel;
+import aopExamProject.scoring.ScoreboardPanel;
 
-public class GameUI 
+
+public class GameUI
 {
 	private final GameMechanics game;
 	private final JFrame frame;
@@ -25,6 +17,7 @@ public class GameUI
 	private PodiumUI podium;
 	ArrayList<Player> kniffler;
 	private Player currentPlayer;
+
 	
 	public GameUI(GameMechanics game) 
 	{
@@ -32,7 +25,7 @@ public class GameUI
 		
 		this.frame = new JFrame("Kniffel");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1280, 720);
+		frame.setSize(1920, 1080);
 		
 	}
 	
@@ -57,21 +50,15 @@ public class GameUI
 				playfield.refreshName(currentPlayer);
 				currentPlayer.toggleIsCurrent();
 				playfield.startGame();
-				
+				ScoreboardPanel board = playfield.getPanel();
+				board.addScoreSubmitListener(game);
+				game.setPanelAndDice(playfield.getDiceCup(), board);
 				
 				cards.show(container, "game");
 				
 			}else {
 				menu.showError("------Keine Spieler vorhanden!-------");
 			}
-		});
-		playfield.ChangeOnPress(()-> 
-		{
-			game.changePlayer();
-			System.out.println("wechsle Spieler");
-			currentPlayer = game.getCurrentPlayer();
-			playfield.refreshName(currentPlayer);
-			System.out.println("Spieler gewechselt");
 		});
 		
 		
