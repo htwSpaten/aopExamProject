@@ -1,4 +1,4 @@
-package aopExamProject.Scoring;
+package aopExamProject.scoring;
 
 public class Scoreboard {
 	

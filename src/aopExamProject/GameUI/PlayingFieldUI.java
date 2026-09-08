@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 
 import aopExamProject.Spielemechanik.Player;
 import aopExamProject.dices.DiceCup;
-import aopExamProject.Scoring.*;
+import aopExamProject.scoring.*;
 
 
 public class PlayingFieldUI extends JPanel

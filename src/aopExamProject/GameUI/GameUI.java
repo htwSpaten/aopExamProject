@@ -1,18 +1,11 @@
 package aopExamProject.GameUI;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.util.ArrayList;
 
+import java.awt.CardLayout;
+import java.util.ArrayList;
 import javax.swing.*;
 import aopExamProject.Spielemechanik.*;
-import aopExamProject.dices.*;
-import aopExamProject.Scoring.Scoreboard;
-import aopExamProject.Scoring.ScoreboardPanel;
+
 
 public class GameUI 
 {

@@ -3,7 +3,7 @@ package aopExamProject.Spielemechanik;
 import java.util.ArrayList;
 
 import aopExamProject.GameUI.*;
-import aopExamProject.Scoring.ScoreboardPanel;
+import aopExamProject.scoring.ScoreboardPanel;
 import aopExamProject.dices.DiceCup;
 import aopExamProject.dices.Scoreboard;
 
@@ -12,7 +12,6 @@ public class GameMechanics
 	private int currentIndex = 0;
 	private int roundCounter = 0;
 	private ArrayList<Player> knifflers;
-	private ScoreboardPanel playersScoreboard;
 	
 	public GameMechanics() {
 		this.knifflers = new ArrayList<Player>();

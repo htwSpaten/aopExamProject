@@ -1,4 +1,4 @@
-package aopExamProject.Scoring;
+package aopExamProject.scoring;
 
 import aopExamProject.Spielemechanik.GameMechanics;
 import aopExamProject.Spielemechanik.Player;
