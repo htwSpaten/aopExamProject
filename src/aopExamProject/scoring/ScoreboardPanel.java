@@ -1,5 +1,6 @@
 package aopExamProject.Scoring;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -51,7 +53,13 @@ public class ScoreboardPanel extends JPanel {
 	
 	public ScoreboardPanel(List<Player> kifflers) {
 		setPreferredSize(new Dimension(500, 500));
+		setLayout(new BorderLayout());
+		//https://dbs.cs.uni-duesseldorf.de/lehre/docs/java/javabuch/html/k100155.html
+		JLabel bigtitle = new JLabel("KNIFFEL");
+		bigtitle.setFont(new Font("Comic Sans MS", Font.BOLD + Font.ITALIC, 22));
+		add(bigtitle, BorderLayout.NORTH);
 		
+		this.setBackground(Color.lightGray);
 		this.knifflers = kifflers;
 		this.boards = new ArrayList<>();
 		for(Player kniff : knifflers) {
@@ -64,21 +72,26 @@ public class ScoreboardPanel extends JPanel {
 		
 		this.cells= new HashMap<>();
 		
-		int cols = knifflers.size() +1; // +1 for category-name col
-		int rows = categories.length +1; // +1 for header row
+		int cols = knifflers.size() + 2; // +1 for category-name col
+		int rows = categories.length + 1; // +1 for header row
 		setLayout(new GridLayout(rows, cols));
 		
 		// head row
 		add(new JLabel("")); // top left corner, empty
+		
 		for (Player p : knifflers) {
 			add(new JLabel(p.getName()));
 			cells.put(p,new HashMap<>());
 		}
+
+		for (int i = 0; i < categories.length; i++) {
+			String cat = categories[i];
+			add(new JLabel(cat));//name cat
+			String infoRow = boards.get(0).infoFieldNames[i];
+			JLabel infoLabel = new JLabel(infoRow);
+			add(infoLabel);
+
 		
-		//one row per category
-		for(String cat : categories) {
-			add(new JLabel(cat));
-			
 			for( Player p : knifflers) {
 				JPanel wrapper = new JPanel(new FlowLayout());
 				JLabel valueLabel = new JLabel("-");
@@ -91,7 +104,6 @@ public class ScoreboardPanel extends JPanel {
 				submitButton.setVisible(false);
 				add(wrapper);
 			}
-			
 		}
 	}
 	
@@ -102,7 +114,11 @@ public class ScoreboardPanel extends JPanel {
 	
 	//nach jedem wurf:
 	public void updatePossibleScore(int[] dice) {
-		int[] possible = ScoreCalculation.getAllPossibleScores(dice); 
+		int[] possible = ScoreCalculation.getAllPossibleScores(dice);
+		
+		
+		
+		
 		for (int i = 0; i < categories.length; i++) {
 			String category = categories[i];
 			Integer score = currentPlayer.getScore().getScore()[i];
@@ -121,8 +137,9 @@ public class ScoreboardPanel extends JPanel {
 			if (score != null) {
 				valueLabel.setText("" + score);
 			}
-			else {
+			else if (possible[i] != 0) {
 				valueLabel.setText("(" + possible[i] + ")");
+				
 			}
 		}
 	}

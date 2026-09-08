@@ -60,6 +60,9 @@ public class PlayingFieldUI extends JPanel
 	}
 	public void refreshName(Player currentPlayer) {
 		playerStatus.setText("Am Zug: " + currentPlayer.getName() + " " +currentPlayer.getId());
+		if (playersScoreboard != null) {
+			playersScoreboard.changePlayer();
+		}
 	}
 	public void ChangeOnPress(Runnable r) {
 		onPress = r;
