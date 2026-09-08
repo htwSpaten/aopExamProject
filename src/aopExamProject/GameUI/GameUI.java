@@ -1,6 +1,4 @@
 package aopExamProject.GameUI;
-
-
 import java.awt.CardLayout;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -20,7 +18,6 @@ public class GameUI
 	ArrayList<Player> kniffler;
 	private Player currentPlayer;
 
-	
 	
 	public GameUI(GameMechanics game) 
 	{
