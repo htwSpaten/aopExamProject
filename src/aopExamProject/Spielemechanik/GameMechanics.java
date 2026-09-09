@@ -1,6 +1,8 @@
 package aopExamProject.Spielemechanik;
 
 import java.util.ArrayList;
+
+import aopExamProject.GameUI.GameUI;
 import aopExamProject.dices.DiceCup;
 import aopExamProject.scoring.ScoreSubmitListener;
 import aopExamProject.scoring.ScoreboardPanel;
@@ -12,13 +14,26 @@ public class GameMechanics implements ScoreSubmitListener
 	private DiceCup cup;
 	private ScoreboardPanel board;
 	private ArrayList<Player> knifflers;
+	private Player kniffler;
+	private GameOverListener listener;
+	
 	
 	@Override
 	public void onScoreSubmit() 
 	{
 		changePlayer();
-		board.changePlayer();
-		cup.resetCup();
+		if(!isGameOver()) {
+			board.changePlayer();
+			cup.resetCup();
+		}else {
+			listener.onGameOver(getWinner());
+			System.out.println(this);
+		}
+	}
+	public void setGameOverListener(GameOverListener listener) {
+		this.listener = listener;
+		System.out.println(this);
+		
 	}
 	public GameMechanics() {
 		this.knifflers = new ArrayList<Player>();
@@ -28,6 +43,31 @@ public class GameMechanics implements ScoreSubmitListener
 	{
 		this.cup = cup;
 		this.board = board;
+	}
+	
+	public Player getWinner() 
+	{
+		int nextScore = 0;
+		int max = knifflers.get(0).getScore().getTotalScore();
+		Player winner = knifflers.get(0);
+		for(int i = 1; i < knifflers.size(); i++) 
+		{
+		
+			
+			nextScore = knifflers.get(i).getScore().getTotalScore();
+			if(nextScore > max) 
+			{
+				max = nextScore;
+				winner = knifflers.get(i);
+			}
+			
+			
+		};
+		 return winner;
+	}
+	public boolean isGameOver() 
+	{
+		return roundCounter >= 3; 
 	}
 	
 	public void gameSetup() 
@@ -45,7 +85,7 @@ public class GameMechanics implements ScoreSubmitListener
 	public void addPlayer(String name) 
 	{
 		int id = knifflers.size();
-		Player kniffler  = new Player(name, id);
+		kniffler  = new Player(name, id);
 		knifflers.add(kniffler);
 		System.out.println("Spieler hinzugefügt: ID " + kniffler.getId() + " - " + name);
 	}
@@ -53,7 +93,7 @@ public class GameMechanics implements ScoreSubmitListener
 	public int countRounds() 
 	{
 		roundCounter += 1;
-		//System.out.println(roundCounter);
+		System.out.println(roundCounter);
 		return roundCounter;
 	}
 	
@@ -81,4 +121,7 @@ public class GameMechanics implements ScoreSubmitListener
 	public ArrayList<Player> getAllKnifflers(){
 		return knifflers;
 	}
+
+	
+
 }

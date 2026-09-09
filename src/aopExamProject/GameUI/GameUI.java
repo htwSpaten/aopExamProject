@@ -6,7 +6,7 @@ import aopExamProject.Spielemechanik.*;
 import aopExamProject.scoring.ScoreboardPanel;
 
 
-public class GameUI
+public class GameUI implements GameOverListener
 {
 	private final GameMechanics game;
 	private final JFrame frame;
@@ -17,8 +17,6 @@ public class GameUI
 	private PodiumUI podium;
 	ArrayList<Player> kniffler;
 	private Player currentPlayer;
-
-	
 	public GameUI(GameMechanics game) 
 	{
 		this.game = game;
@@ -37,6 +35,7 @@ public class GameUI
 		kniffler = game.getAllKnifflers();
 		playfield = new PlayingFieldUI(kniffler);
 		podium = new PodiumUI();
+		game.setGameOverListener(this);
 		
 		
 		menu.setOnAdd(name -> {
@@ -47,14 +46,14 @@ public class GameUI
 			if(game.getPlayerCount() >=1) {
 				game.play();
 				currentPlayer = game.getCurrentPlayer();
-				playfield.refreshName(currentPlayer);
+				//playfield.refreshName(currentPlayer);
 				currentPlayer.toggleIsCurrent();
 				playfield.startGame();
 				ScoreboardPanel board = playfield.getPanel();
 				board.addScoreSubmitListener(game);
 				game.setPanelAndDice(playfield.getDiceCup(), board);
 				
-				cards.show(container, "game");
+				cards.show(container, "podest");
 				
 			}else {
 				menu.showError("------Keine Spieler vorhanden!-------");
@@ -68,6 +67,15 @@ public class GameUI
 		
 		frame.setContentPane(container);
 		frame.setVisible(true);
+	}
+
+	
+
+	@Override
+	public void onGameOver(Player winner) {
+		podium.showPodium(winner);
+		cards.show(container, "podest");
+		
 	}
 	
 	
