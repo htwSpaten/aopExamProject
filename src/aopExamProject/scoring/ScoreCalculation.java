@@ -74,6 +74,8 @@ public class ScoreCalculation {
 		for(int i=0;i<=sorted.size()-2;i++) {
 			if(sorted.get(i)+1 == sorted.get(i+1)) {
 				count++;
+			} else {
+				count = 1;
 			}
 		}
 		
