@@ -26,12 +26,10 @@ public class GameMechanics implements ScoreSubmitListener
 			cup.resetCup();
 		}else {
 			listener.onGameOver(getWinner());
-			System.out.println(this);
 		}
 	}
 	public void setGameOverListener(GameOverListener listener) {
 		this.listener = listener;
-		System.out.println(this);
 		
 	}
 	public GameMechanics() {
@@ -47,20 +45,17 @@ public class GameMechanics implements ScoreSubmitListener
 	public Player getWinner() 
 	{
 		int nextScore = 0;
-		int max = knifflers.get(0).getScore().getTotalScore();
+		int max = 0;
 		Player winner = knifflers.get(0);
-		for(int i = 1; i < knifflers.size(); i++) 
+		for(int i = 0; i < knifflers.size(); i++) 
 		{
-		
-			
+			// TODO: what if there are 2 winners?
 			nextScore = knifflers.get(i).getScore().getTotalScore();
 			if(nextScore > max) 
 			{
 				max = nextScore;
 				winner = knifflers.get(i);
 			}
-			
-			
 		};
 		 return winner;
 	}
