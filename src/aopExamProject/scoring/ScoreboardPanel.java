@@ -78,7 +78,9 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 		add(new JLabel("")); // top left corner, empty
 		
 		for (Player p : knifflers) {
-			add(new JLabel(p.getName()));
+			JLabel nameTag = new JLabel(p.getName());
+			nameTag.setHorizontalAlignment(SwingConstants.CENTER);
+			add(nameTag);
 			cells.put(p,new HashMap<>());
 		}
 
