@@ -1,5 +1,8 @@
 package aopExamProject.scoring;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ScoreCalculation {
 
 	// oberer teil vom block 
@@ -117,21 +120,22 @@ public class ScoreCalculation {
 		}
 		return sum;
 	}
-	public static int[] getAllPossibleScores(int[] dice) {
-		int[] result = new int[Scoreboard.FIELD_COUNT];
-		result[Scoreboard.ONES] = calculateUpper(dice, 1);
-		result[Scoreboard.TWOS] = calculateUpper(dice, 2);
-		result[Scoreboard.THREES] = calculateUpper(dice, 3);
-		result[Scoreboard.FOURS] = calculateUpper(dice, 4);
-		result[Scoreboard.FIVES] = calculateUpper(dice, 5);
-		result[Scoreboard.SIXES] = calculateUpper(dice, 6);
-		result[Scoreboard.THREE_OF_A_KIND] = calculateThreeOfAKind(dice);
-		result[Scoreboard.FOUR_OF_A_KIND] = calculateFourOfAKind(dice);
-		result[Scoreboard.FULL_HOUSE] = calculateFullHouse(dice);
-		result[Scoreboard.SMALL_STRAIGHT] = calculateSmallStraight(dice);
-		result[Scoreboard.LARGE_STRAIGHT] = calculateLargeStraight(dice);
-		result[Scoreboard.YAHTZEE] = calculateYahtzee(dice);
-		result[Scoreboard.CHANCE] = calculateChance(dice);
+	public static Map<ScoreCategory, Integer> getAllPossibleScores(int[] dice) {
+		Map<ScoreCategory, Integer> result = new HashMap<>();
+		result.put(ScoreCategory.ONES, calculateUpper(dice, 1));
+		result.put(ScoreCategory.TWOS, calculateUpper(dice, 2));
+		result.put(ScoreCategory.THREES, calculateUpper(dice, 3));
+		result.put(ScoreCategory.FOURS, calculateUpper(dice, 4));
+		result.put(ScoreCategory.FIVES, calculateUpper(dice, 5));
+		result.put(ScoreCategory.SIXES, calculateUpper(dice, 6));
+		result.put(ScoreCategory.THREE_OF_A_KIND, calculateThreeOfAKind(dice));
+		result.put(ScoreCategory.FOUR_OF_A_KIND,calculateFourOfAKind(dice));
+		result.put(ScoreCategory.FULL_HOUSE, calculateFullHouse(dice));
+		result.put(ScoreCategory.SMALL_STRAIGHT, calculateSmallStraight(dice));
+		result.put(ScoreCategory.LARGE_STRAIGHT, calculateLargeStraight(dice));
+		result.put(ScoreCategory.YAHTZEE, calculateYahtzee(dice));
+		result.put(ScoreCategory.CHANCE, calculateChance(dice));
+		
 		return result;
 	}
 }
