@@ -123,6 +123,11 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 				continue;
 			}
 			
+			if (score != null) {
+				valueLabel.setText(String.valueOf(score));
+				continue;
+			}
+			
 			submitButton.setVisible(true);
 							
 			removeButtonListeners(submitButton);
@@ -132,13 +137,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 				handleSubmit();
 			});
 			
-			if (score != null) {
-				valueLabel.setText("" + score);
-			}
-			else {
-				valueLabel.setText("(" + possibleScore + ")");
-				
-			}
+			valueLabel.setText("(" + possibleScore + ")");
 		}
 	}
 	
@@ -169,34 +168,12 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 		}
 	}
 	
-	public void addScoreSubmitListener(ScoreSubmitListener listener) {
-		this.submitListeners.add(listener);
-	}
-	
-	private void handleSubmit() {
-		updateActualScore();
-		for(ScoreSubmitListener listener : submitListeners ) 
-		{
-			listener.onScoreSubmit();
-		}
-		//changePlayer();
-		
-		
-	}
-	
 	private void removeButtonListeners(JButton submitButton){
 		ActionListener[] buttonListeners = submitButton.getActionListeners();
 		for(ActionListener listi : buttonListeners) {
 			submitButton.removeActionListener(listi);
 		}
 	}
-	
-	@Override
-	public void onDiceRolled(int[] dices) 
-	{
-		updatePossibleScore(dices);
-	}
-
 }
 	
 	

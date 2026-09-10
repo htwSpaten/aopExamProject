@@ -43,10 +43,16 @@ public class ScoreCalculation {
 		boolean hasThree = false;
 		boolean hasTwo = false; 
 		
-		hasThree = calculateNumberOfAKind(values, 3) != 0;
-		hasTwo = calculateNumberOfAKind(values, 2) != 0;
+		for (int i = 1; i <= 6; i++) {
+			if (counts[i] == 3) {
+				hasThree = true;
+			}
+			if (counts[i] == 2) {
+				hasTwo = true;
+			}
+		}
 		
-		if (hasThree && hasTwo == true) {
+		if (hasThree && hasTwo) {
 			return 25;
 		}
 		return 0;
@@ -65,7 +71,7 @@ public class ScoreCalculation {
 		// zählt aufeinander folgende Zahlen
 		int count = 1;
 		
-		for(int i=0;i<=sorted.size()-1;i++) {
+		for(int i=0;i<=sorted.size()-2;i++) {
 			if(sorted.get(i)+1 == sorted.get(i+1)) {
 				count++;
 			}
