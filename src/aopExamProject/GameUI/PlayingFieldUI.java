@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import aopExamProject.Spielemechanik.Player;
@@ -17,8 +18,6 @@ import aopExamProject.scoring.*;
 // keine Listener! WEIL PLAYER FEHLT!
 public class PlayingFieldUI extends JPanel
 {
-	private Runnable onPress;
-	
 	private JPanel scoreboardContainer;
 	private JLabel playerStatus;
 	private ScoreboardPanel playersScoreboard;
@@ -28,29 +27,23 @@ public class PlayingFieldUI extends JPanel
 	{
 		setLayout(new BorderLayout(15,5));
 		scoreboardContainer = new JPanel(new BorderLayout(15,5));
-		scoreboardContainer.setPreferredSize(new Dimension(1000, 400));
 		
 		this.knifflers = knifflers;
 		
 		this.playerStatus = new JLabel("-");
 		this.add(playerStatus, BorderLayout.NORTH);
 		playerStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		JButton change = new JButton("wechsel Spieler!");//testing
-		this.add(change, BorderLayout.WEST);
 		this.setBackground(Color.WHITE);
-		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-		this.add(scoreboardContainer, BorderLayout.EAST);
-		
-		
-		change.addActionListener(e-> onPress.run());
-		
-				
+		this.add(scoreboardContainer, BorderLayout.CENTER);
+					
 	}
 
 	public void startGame() 
 	{
+		
 		playersScoreboard = new ScoreboardPanel(knifflers);
-		scoreboardContainer.add(playersScoreboard);
+		JScrollPane scrollPane = new JScrollPane(playersScoreboard);
+		scoreboardContainer.add(scrollPane);
 		cupUI = new DiceCup();
 		this.add(cupUI.getPanel(), BorderLayout.SOUTH);
 		cupUI.addDiceRollListener(playersScoreboard);
@@ -72,8 +65,5 @@ public class PlayingFieldUI extends JPanel
 		playerStatus.setText("Am Zug: " + currentPlayer.getName() + " " +currentPlayer.getId());
 		
 		
-	}
-	public void ChangeOnPress(Runnable r) {
-		onPress = r;
 	}
 }

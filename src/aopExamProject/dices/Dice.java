@@ -49,7 +49,7 @@ public class Dice implements ItemListener {
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		locked = !locked;
+		locked = lockBox.isSelected();
 	}
 	
 	public JPanel getPanel() {
