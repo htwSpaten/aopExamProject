@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -128,6 +129,8 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 			JButton submitButton = (JButton) wrapper.getComponent(1);
 			submitButton.setVisible(true);
 			
+			removeButtonListeners(submitButton);
+			
 			submitButton.addActionListener(e->{
 				currentPlayer.getScore().setScore(catIndex,possible[catIndex]);
 				handleSubmit();
@@ -152,6 +155,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 			JLabel valueLabel= (JLabel) wrapper.getComponent(0);
 			JButton submitButton = (JButton) wrapper.getComponent(1);
 			submitButton.setVisible(false);
+			removeButtonListeners(submitButton);
 			
 			if (score != null) {
 				valueLabel.setText("" + score);
@@ -176,6 +180,14 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 		
 		
 	}
+	
+	private void removeButtonListeners(JButton submitButton){
+		ActionListener[] buttonListeners = submitButton.getActionListeners();
+		for(ActionListener listi : buttonListeners) {
+			submitButton.removeActionListener(listi);
+		}
+	}
+	
 	@Override
 	public void onDiceRolled(int[] dices) 
 	{
