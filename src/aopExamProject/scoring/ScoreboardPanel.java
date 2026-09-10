@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	private List<JLabel> headerLabels;
 
 	public ScoreboardPanel(List<Player> kifflers) {
-		setPreferredSize(new Dimension(1000, 1000));
+		 
 		//https://dbs.cs.uni-duesseldorf.de/lehre/docs/java/javabuch/html/k100155.html
 		
 		this.setBackground(Color.lightGray);
@@ -50,7 +51,9 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 		add(new JLabel("")); // top left corner, empty
 		
 		for (Player p : knifflers) {
-			add(new JLabel(p.getName()));
+			JLabel nameTag = new JLabel(p.getName());
+			nameTag.setHorizontalAlignment(SwingConstants.CENTER);
+			add(nameTag);
 			cells.put(p,new HashMap<>());
 		}
 
@@ -121,8 +124,10 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 			}
 			
 			submitButton.setVisible(true);
+							
+			removeButtonListeners(submitButton);
 			
-			submitButton.addActionListener(_->{
+			submitButton.addActionListener(e->{
 				currentPlayer.getScore().setScore(catFinal,possibleScore);
 				handleSubmit();
 			});
@@ -153,6 +158,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 			JLabel valueLabel= (JLabel) wrapper.getComponent(0);
 			JButton submitButton = (JButton) wrapper.getComponent(1);
 			submitButton.setVisible(false);
+			removeButtonListeners(submitButton);
 			
 			if (score != null) {
 				valueLabel.setText("" + score);
@@ -162,6 +168,35 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 			}
 		}
 	}
+	
+	public void addScoreSubmitListener(ScoreSubmitListener listener) {
+		this.submitListeners.add(listener);
+	}
+	
+	private void handleSubmit() {
+		updateActualScore();
+		for(ScoreSubmitListener listener : submitListeners ) 
+		{
+			listener.onScoreSubmit();
+		}
+		//changePlayer();
+		
+		
+	}
+	
+	private void removeButtonListeners(JButton submitButton){
+		ActionListener[] buttonListeners = submitButton.getActionListeners();
+		for(ActionListener listi : buttonListeners) {
+			submitButton.removeActionListener(listi);
+		}
+	}
+	
+	@Override
+	public void onDiceRolled(int[] dices) 
+	{
+		updatePossibleScore(dices);
+	}
+
 }
 	
 	
