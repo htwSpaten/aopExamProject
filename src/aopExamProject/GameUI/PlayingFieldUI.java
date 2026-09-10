@@ -18,8 +18,6 @@ import aopExamProject.scoring.*;
 // keine Listener! WEIL PLAYER FEHLT!
 public class PlayingFieldUI extends JPanel
 {
-	private Runnable onPress;
-	
 	private JPanel scoreboardContainer;
 	private JLabel playerStatus;
 	private ScoreboardPanel playersScoreboard;
@@ -29,7 +27,6 @@ public class PlayingFieldUI extends JPanel
 	{
 		setLayout(new BorderLayout(15,5));
 		scoreboardContainer = new JPanel(new BorderLayout(15,5));
-		scoreboardContainer.setPreferredSize(new Dimension(1000, 400));
 		
 		this.knifflers = knifflers;
 		
@@ -37,13 +34,8 @@ public class PlayingFieldUI extends JPanel
 		this.add(playerStatus, BorderLayout.NORTH);
 		playerStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		this.setBackground(Color.WHITE);
-		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-		this.add(scoreboardContainer, BorderLayout.EAST);
-		
-		
-	
-		
-				
+		this.add(scoreboardContainer, BorderLayout.CENTER);
+					
 	}
 
 	public void startGame() 
@@ -73,8 +65,5 @@ public class PlayingFieldUI extends JPanel
 		playerStatus.setText("Am Zug: " + currentPlayer.getName() + " " +currentPlayer.getId());
 		
 		
-	}
-	public void ChangeOnPress(Runnable r) {
-		onPress = r;
 	}
 }
