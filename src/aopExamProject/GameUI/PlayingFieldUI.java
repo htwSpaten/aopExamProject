@@ -36,14 +36,12 @@ public class PlayingFieldUI extends JPanel
 		this.playerStatus = new JLabel("-");
 		this.add(playerStatus, BorderLayout.NORTH);
 		playerStatus.setHorizontalAlignment(SwingConstants.CENTER);
-		JButton change = new JButton("wechsel Spieler!");//testing
-		this.add(change, BorderLayout.WEST);
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 		this.add(scoreboardContainer, BorderLayout.EAST);
 		
 		
-		change.addActionListener(e-> onPress.run());
+	
 		
 				
 	}

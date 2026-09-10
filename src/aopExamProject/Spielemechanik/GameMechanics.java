@@ -66,7 +66,7 @@ public class GameMechanics implements ScoreSubmitListener
 	}
 	public boolean isGameOver() 
 	{
-		return roundCounter >= 14; 
+		return roundCounter >= 3; 
 	}
 	
 	public void gameSetup() 
