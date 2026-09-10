@@ -26,20 +26,21 @@ public enum ScoreCategory {
 	TOTAL_SCORE("Endsumme","->", false);
 		
 	private final boolean settable;
-	private final String fieldNames;
-	private final String infoFieldNames;
+	private final String fieldName;
+	private final String infoFieldName;
 		
-	ScoreCategory(String fieldNames,String infoFieldNames, boolean settable) {
-		this.fieldNames = fieldNames;
-		this.infoFieldNames = infoFieldNames;
+	ScoreCategory(String fieldName,String infoFieldName, boolean settable) {
+		this.fieldName = fieldName;
+		this.infoFieldName = infoFieldName;
 		this.settable = settable;
 	}
-	public String getinfoFieldNames() {
-		return infoFieldNames;
+	
+	public String getinfoFieldName() {
+		return infoFieldName;
 	}
 		
-	public String getfieldNames() {
-			return fieldNames;
+	public String getfieldName() {
+			return fieldName;
 	}
 		
 	public boolean isSettable() {

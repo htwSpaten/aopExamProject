@@ -6,18 +6,26 @@ import java.util.Map;
 public class Scoreboard {
 	
 	private Map<ScoreCategory, Integer> scores = new HashMap<>();
-
+	
+	private ScoreCategory[] lowerFields = {
+			ScoreCategory.THREE_OF_A_KIND, ScoreCategory.FOUR_OF_A_KIND, ScoreCategory.FULL_HOUSE, ScoreCategory.SMALL_STRAIGHT, ScoreCategory.LARGE_STRAIGHT, ScoreCategory.YAHTZEE, ScoreCategory.CHANCE
+		};
+	private ScoreCategory[] upperFields = {
+			ScoreCategory.ONES, ScoreCategory.TWOS, ScoreCategory.THREES, ScoreCategory.FOURS, ScoreCategory.FIVES, ScoreCategory.SIXES
+		};
+	
 	public void setScore(ScoreCategory cat, int points) {
 		if (cat.isSettable()) {
 			scores.put(cat, points);
 		}
 	}
+	
+	public Integer getScorePoints(ScoreCategory cat) {
+		return scores.get(cat);
+	}
 
 	public int getUpperScore() {
 		int sum = 0; 
-		ScoreCategory[] upperFields = {
-			ScoreCategory.ONES, ScoreCategory.TWOS, ScoreCategory.THREES, ScoreCategory.FOURS, ScoreCategory.FIVES, ScoreCategory.SIXES
-		};
 		for (ScoreCategory cat : upperFields) {
 			sum += scores.getOrDefault(cat, 0);
 		}
@@ -37,19 +45,12 @@ public class Scoreboard {
 	
 	public int getLowerScore() {
 		int sum = 0; 
-		ScoreCategory[] lowerFields = {
-			ScoreCategory.THREE_OF_A_KIND, ScoreCategory.FOUR_OF_A_KIND, ScoreCategory.FULL_HOUSE, ScoreCategory.SMALL_STRAIGHT, ScoreCategory.LARGE_STRAIGHT, ScoreCategory.YAHTZEE, ScoreCategory.CHANCE
-		};
 		for (ScoreCategory cat : lowerFields) {
 			sum += scores.getOrDefault(cat, 0);
 		}
 		return sum;
 	}
-		
-	public int getFinalUpperScore2() {
-		return getFinalUpperScore();
-	}
-	
+
 	public int getTotalScore() {
 		return getFinalUpperScore() + getLowerScore();
 	}

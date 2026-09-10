@@ -20,51 +20,27 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	private List<Scoreboard> boards;
 	private List<Player> knifflers;
 	private Player currentPlayer;
-	private String[] categories;
 	private Map<Player,Map<ScoreCategory,JPanel>> cells;
 	private List<ScoreSubmitListener> submitListeners = new ArrayList<>();
 	private List<JLabel> headerLabels;
-	
-	private Player getCurrentPlayer() {
-		for(Player kniff : knifflers) {
-			if(kniff.getIsCurrent()) {
-				return kniff;
-			} 
-		}
-		throw new IllegalStateException("No current player set");
-	}
-	
-	private void highlightCurrentPlayer() {
-		this.headerLabels = new ArrayList<>();//
-		for (int i = 0; i < knifflers.size(); i++) {
-			JLabel header = headerLabels.get(i);
-			if (knifflers.get(i) == currentPlayer) {
-				header.setFont(header.getFont().deriveFont(Font.BOLD));
-				header.setForeground(Color.PINK);
-			}
-			else {
-				header.setFont(header.getFont().deriveFont(Font.PLAIN));
-				header.setForeground(null);
-			}
-		}
-	}
-	
+
 	public ScoreboardPanel(List<Player> kifflers) {
 		setPreferredSize(new Dimension(1000, 1000));
 		//https://dbs.cs.uni-duesseldorf.de/lehre/docs/java/javabuch/html/k100155.html
+		
 		this.setBackground(Color.lightGray);
 		this.knifflers = kifflers;
 		this.boards = new ArrayList<>();
-		this.cells= new HashMap<>();
-		/*for(Player kniff : knifflers) {
+		for(Player kniff : knifflers) {
 			boards.add(kniff.getScore());
-		}*/
+		}
 		
 		currentPlayer = getCurrentPlayer();
+		this.cells= new HashMap<>();
 		
-		/*this.categories= boards.get(0).fieldNames;*/
+		ScoreCategory[] categories = ScoreCategory.values();
 		int cols = knifflers.size() + 2; // +1 for category-name col
-		int rows = ScoreCategory.values().length + 1; // +1 for header row
+		int rows = categories.length + 1; // +1 for header row
 		setLayout(new GridLayout(rows, cols, 0, 10));
 		
 		// head row
@@ -77,12 +53,15 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 			add(new JLabel(p.getName()));
 			cells.put(p,new HashMap<>());
 		}
-		
-		for (ScoreCategory cat : ScoreCategory.values()) {
-			add(new JLabel(cat.getLabel()));
-			JLabel infoLabel = new JLabel(cat.getinfoLabel());
+
+		for (ScoreCategory category : ScoreCategory.values()) {
+			String cat = category.getfieldName();
+			add(new JLabel(cat));//name cat
+			String infoRow = category.getinfoFieldName();
+			JLabel infoLabel = new JLabel(infoRow);
 			add(infoLabel);
-			
+
+		
 			for( Player p : knifflers) {
 				JPanel wrapper = new JPanel(new GridLayout(2,1));
 				JLabel valueLabel = new JLabel("-");
@@ -90,7 +69,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 				JButton submitButton = new JButton("submit");
 				
 				
-				cells.get(p).put(cat, wrapper);
+				cells.get(p).put(category, wrapper);
 				
 				wrapper.add(valueLabel);
 				wrapper.add(submitButton);
@@ -98,15 +77,6 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 				add(wrapper);
 			}
 		}
-			
-			
-		
-		/*for (int i = 0; i < categories.length; i++) {
-			String cat = categories[i];
-			add(new JLabel(cat));//name cat
-			String infoRow = boards.get(0).infoFieldNames[i];
-			JLabel infoLabel = new JLabel(infoRow);
-			add(infoLabel);*/
 	}
 	
 	public void changePlayer() {
@@ -114,92 +84,57 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 		//highlightCurrentPlayer();
 	}
 	
-	//nach jedem wurf:
-	public void updatePossibleScore(int[] dice) {
+	@Override
+	public void onDiceRolled(int[] dices) 
+	{
+		updatePossibleScore(dices);
+	}
+	
+	public void addScoreSubmitListener(ScoreSubmitListener listener) {
+		this.submitListeners.add(listener);
+	}
+	
+	private Player getCurrentPlayer() {
+		for(Player kniff : knifflers) {
+			if(kniff.getIsCurrent()) {
+				return kniff;
+			} 
+		}
+		throw new IllegalStateException("No current player set");
+	}
+	
+	private void updatePossibleScore(int[] dice) {
 		Map<ScoreCategory, Integer> possible = ScoreCalculation.getAllPossibleScores(dice);
 		
-		for (ScoreCategory cat : ScoreCategory.values()) {
-			if (!cat.isSettable()) 
-				continue;
-			if (currentPlayer.getScore().isFieldEmpty(cat)) {
-
-				JPanel wrapper = cells.get(currentPlayer).get(cat.name());
-				JLabel valueLabel= (JLabel) wrapper.getComponent(0);
-				JButton submitButton = (JButton) wrapper.getComponent(1);
-				
-				int points = possible.getOrDefault(cat, 0);
-				valueLabel.setText("" + points);
-				submitButton.setVisible(true);
-				
-				submitButton.addActionListener(e->{
-					currentPlayer.getScore().setScore(cat, points);
-					handleSubmit();
-				});
-			}
-			
-		}
-	
-		/*for (int i = 0; i < categories.length; i++) {
-			String category = categories[i];
-			Integer score = currentPlayer.getScore().getScore()[i];
-			final int catIndex = i; // because the listener needs a final int, since the loop can be already over when the button is clicked
+		for (ScoreCategory category : ScoreCategory.values()) {
+			Integer score = currentPlayer.getScore().getScorePoints(category);
+			final ScoreCategory catFinal = category; // because the listener needs a final int, since the loopcan be already over when the button is clicked
+			Integer possibleScore = possible.get(catFinal);
 			
 			JPanel wrapper = cells.get(currentPlayer).get(category);
 			JLabel valueLabel= (JLabel) wrapper.getComponent(0);
 			JButton submitButton = (JButton) wrapper.getComponent(1);
+			
+			
+			if(!category.isSettable()) {
+				continue;
+			}
+			
 			submitButton.setVisible(true);
 			
-			submitButton.addActionListener(e->{
-				currentPlayer.getScore().setScore(catIndex,possible[catIndex]);
+			submitButton.addActionListener(_->{
+				currentPlayer.getScore().setScore(catFinal,possibleScore);
 				handleSubmit();
 			});
 			
 			if (score != null) {
 				valueLabel.setText("" + score);
 			}
-			else if (possible[i] != 0) {
-				valueLabel.setText("(" + possible[i] + ")");
-				
-			}
-		}*/
-	}
-	
-	public void updateActualScore() {
-		for (ScoreCategory cat : ScoreCategory.values()) {
-			JPanel wrapper = cells.get(currentPlayer).get(cat.name());
-			JLabel valueLabel= (JLabel) wrapper.getComponent(0);
-			JButton submitButton = (JButton) wrapper.getComponent(1);
-			submitButton.setVisible(false);
-			
-			if (currentPlayer.getScore().isFieldEmpty(cat)) {
-				valueLabel.setText("" + currentPlayer.getScore().getPoints(cat));
-			}
 			else {
-				valueLabel.setText("-");
-				}
+				valueLabel.setText("(" + possibleScore + ")");
 				
 			}
 		}
-/*		for (int i = 0; i < categories.length; i++) {
-			String category = categories[i];
-			Integer score = currentPlayer.getScore().getScore()[i];
-			
-			JPanel wrapper = cells.get(currentPlayer).get(category);
-			JLabel valueLabel= (JLabel) wrapper.getComponent(0);
-			JButton submitButton = (JButton) wrapper.getComponent(1);
-			submitButton.setVisible(false);
-			
-			if (score != null) {
-				valueLabel.setText("" + score);
-			}
-			else {
-				valueLabel.setText("-");
-			}
-		}*/
-	
-	
-	public void addScoreSubmitListener(ScoreSubmitListener listener) {
-		this.submitListeners.add(listener);
 	}
 	
 	private void handleSubmit() {
@@ -208,14 +143,25 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 		{
 			listener.onScoreSubmit();
 		}
-		//changePlayer();
-		
-		
 	}
-	@Override
-	public void onDiceRolled(int[] dices) 
-	{
-		updatePossibleScore(dices);
+	
+	private void updateActualScore() {
+		for (ScoreCategory category : ScoreCategory.values()) {
+			Integer score = currentPlayer.getScore().getScorePoints(category);
+			
+			JPanel wrapper = cells.get(currentPlayer).get(category);
+			JLabel valueLabel= (JLabel) wrapper.getComponent(0);
+			JButton submitButton = (JButton) wrapper.getComponent(1);
+			submitButton.setVisible(false);
+			
+			if (score != null) {
+				valueLabel.setText("" + score);
+			}
+			else {
+				valueLabel.setText("-");
+			}
+		}
 	}
-
 }
+	
+	
