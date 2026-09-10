@@ -50,7 +50,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	}
 	
 	public ScoreboardPanel(List<Player> kifflers) {
-		setPreferredSize(new Dimension(1000, 1000));
+		//setPreferredSize(new Dimension(1000, 1000));
 		//https://dbs.cs.uni-duesseldorf.de/lehre/docs/java/javabuch/html/k100155.html
 		
 		this.setBackground(Color.lightGray);

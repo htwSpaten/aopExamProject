@@ -53,7 +53,7 @@ public class GameUI implements GameOverListener
 				board.addScoreSubmitListener(game);
 				game.setPanelAndDice(playfield.getDiceCup(), board);
 				
-				cards.show(container, "podest");
+				cards.show(container, "game");
 				
 			}else {
 				menu.showError("------Keine Spieler vorhanden!-------");

@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 import aopExamProject.Spielemechanik.Player;
@@ -49,8 +50,10 @@ public class PlayingFieldUI extends JPanel
 
 	public void startGame() 
 	{
+		
 		playersScoreboard = new ScoreboardPanel(knifflers);
-		scoreboardContainer.add(playersScoreboard);
+		JScrollPane scrollPane = new JScrollPane(playersScoreboard);
+		scoreboardContainer.add(scrollPane);
 		cupUI = new DiceCup();
 		this.add(cupUI.getPanel(), BorderLayout.SOUTH);
 		cupUI.addDiceRollListener(playersScoreboard);

@@ -11,11 +11,13 @@ public class Main {
 
 	public static void main(String[] args) 
 	{
-		/*
+		
 			GameMechanics game = new GameMechanics();
 			GameUI ui = new GameUI(game);
 			ui.initUI();
-		*/
+		
+		
+		/*
 		GameMechanics game = new GameMechanics();
 		PodiumUI pod = new PodiumUI();
 		GameUI ui = new GameUI(game);
@@ -33,6 +35,7 @@ public class Main {
 		
 		Player winner = game.getWinner();
 		ui.onGameOver(winner);
+		*/
 	}
 
 }
