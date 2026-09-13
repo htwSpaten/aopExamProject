@@ -23,7 +23,6 @@ public class PodiumUI extends JPanel
 		name.setFont(new Font("Comic Sans MS", Font.BOLD + Font.ITALIC, 22));
 		name.setForeground(Color.GREEN);
 		this.add(name);
-		
 	}
 	
 	public void showPodium(Player winner) 

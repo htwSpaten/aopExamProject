@@ -17,6 +17,7 @@ public class GameUI implements GameOverListener
 	private PodiumUI podium;
 	ArrayList<Player> kniffler;
 	private Player currentPlayer;
+	
 	public GameUI(GameMechanics game) 
 	{
 		this.game = game;
@@ -37,16 +38,14 @@ public class GameUI implements GameOverListener
 		podium = new PodiumUI();
 		game.setGameOverListener(this);
 		
-		
 		menu.setOnAdd(name -> {
 			game.addPlayer(name);
 			menu.addPlayerToList(name);
 		});
+		
 		menu.addOnPress(()-> {
 			if(game.getPlayerCount() >=1) {
-				game.play();
 				currentPlayer = game.getCurrentPlayer();
-				//playfield.refreshName(currentPlayer);
 				currentPlayer.toggleIsCurrent();
 				playfield.startGame();
 				ScoreboardPanel board = playfield.getPanel();
@@ -60,7 +59,6 @@ public class GameUI implements GameOverListener
 			}
 		});
 		
-		
 		container.add(menu, "menu");
 		container.add(playfield, "game");
 		container.add(podium , "podest");
@@ -69,16 +67,10 @@ public class GameUI implements GameOverListener
 		frame.setVisible(true);
 	}
 
-	
-
 	@Override
 	public void onGameOver(Player winner) {
 		podium.showPodium(winner);
 		cards.show(container, "podest");
 		
 	}
-	
-	
-	
-	
 }

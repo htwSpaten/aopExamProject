@@ -16,6 +16,9 @@ public class GameMechanics implements ScoreSubmitListener
 	private Player kniffler;
 	private GameOverListener listener;
 	
+	public GameMechanics() {
+		this.knifflers = new ArrayList<Player>();
+	}
 	
 	@Override
 	public void onScoreSubmit() 
@@ -28,12 +31,9 @@ public class GameMechanics implements ScoreSubmitListener
 			listener.onGameOver(getWinner());
 		}
 	}
+	
 	public void setGameOverListener(GameOverListener listener) {
 		this.listener = listener;
-		
-	}
-	public GameMechanics() {
-		this.knifflers = new ArrayList<Player>();
 	}
 	
 	public void setPanelAndDice(DiceCup cup, ScoreboardPanel board) 
@@ -59,6 +59,7 @@ public class GameMechanics implements ScoreSubmitListener
 		};
 		 return winner;
 	}
+	
 	public boolean isGameOver() 
 	{
 		return roundCounter >= 13; 
@@ -68,26 +69,17 @@ public class GameMechanics implements ScoreSubmitListener
 	{
 		knifflers.clear();
 		roundCounter = 1;
-		
-	}
-	
-	public void play() 
-	{
-		currentIndex = 0;
 	}
 	
 	public void addPlayer(String name) 
 	{
-		int id = knifflers.size();
-		kniffler  = new Player(name, id);
+		kniffler  = new Player(name);
 		knifflers.add(kniffler);
-		System.out.println("Spieler hinzugefügt: ID " + kniffler.getId() + " - " + name);
 	}
 		
 	public int countRounds() 
 	{
 		roundCounter += 1;
-		System.out.println(roundCounter);
 		return roundCounter;
 	}
 	
@@ -100,18 +92,17 @@ public class GameMechanics implements ScoreSubmitListener
 		{
 			countRounds();
 		}
-		
-		
 	}
+	
 	public int getPlayerCount() {
 		return knifflers.size();
 	}
+	
 	public Player getCurrentPlayer() 
 	{
 		return knifflers.get(currentIndex);
 	}
 	
-
 	public ArrayList<Player> getAllKnifflers(){
 		return knifflers;
 	}

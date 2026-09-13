@@ -28,7 +28,6 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	public ScoreboardPanel(List<Player> kifflers) {
 		 
 		// siehe Quelle Nr 10.
-		
 		this.setBackground(Color.lightGray);
 		this.knifflers = kifflers;
 		this.boards = new ArrayList<>();

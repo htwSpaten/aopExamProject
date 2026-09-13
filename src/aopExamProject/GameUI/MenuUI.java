@@ -33,12 +33,12 @@ public class MenuUI extends JPanel
 	{
 		onAdd = c;
 	}
+	
 	public MenuUI() 
 	{
 		setLayout(new BorderLayout(15,5));
 		this.setBackground(Color.white);
 		this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
-		
 		
 		list = new DefaultListModel<>();
 		JList<String> playerList = new JList<>(list);
@@ -84,12 +84,14 @@ public class MenuUI extends JPanel
 		this.add(centerPanel, BorderLayout.CENTER);
 		
 	}
+	
 	public void addPlayerToList(String name) 
 	{
 		list.addElement(name);
 		nameField.setText("");
 		nameField.requestFocus();
 	}
+	
 	public void showError(String text) 
 	{
 		errorprint.setText(text);
