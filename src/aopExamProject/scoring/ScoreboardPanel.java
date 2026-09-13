@@ -1,7 +1,6 @@
 package aopExamProject.scoring;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -24,6 +23,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	private Map<Player,Map<ScoreCategory,JPanel>> cells;
 	private List<ScoreSubmitListener> submitListeners = new ArrayList<>();
 	private List<JLabel> headerLabels;
+	private List<JLabel> nameLabel;
 
 	public ScoreboardPanel(List<Player> kifflers) {
 		 
@@ -32,6 +32,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 		this.setBackground(Color.lightGray);
 		this.knifflers = kifflers;
 		this.boards = new ArrayList<>();
+		this.nameLabel = new ArrayList <>();
 		for(Player kniff : knifflers) {
 			boards.add(kniff.getScore());
 		}
@@ -53,7 +54,9 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 		for (Player p : knifflers) {
 			JLabel nameTag = new JLabel(p.getName());
 			nameTag.setHorizontalAlignment(SwingConstants.CENTER);
+			nameTag.setOpaque(true);
 			add(nameTag);
+			nameLabel.add(nameTag);
 			cells.put(p,new HashMap<>());
 		}
 
@@ -84,7 +87,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	
 	public void changePlayer() {
 		currentPlayer = getCurrentPlayer();
-		//highlightCurrentPlayer();
+		highlightCurrentPlayer();
 	}
 	
 	@Override
@@ -95,6 +98,24 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	
 	public void addScoreSubmitListener(ScoreSubmitListener listener) {
 		this.submitListeners.add(listener);
+	}
+	
+	private void highlightCurrentPlayer() {
+		for (int i = 0; i < knifflers.size(); i++) {
+			Player p = knifflers.get(i);
+			JLabel label = nameLabel.get(i);
+			
+			if (p.getIsCurrent()) {
+				label.setBackground(Color.ORANGE);
+				label.setFont(label.getFont().deriveFont(Font.BOLD));
+			}
+			else {
+				label.setBackground(null);
+				label.setFont(label.getFont().deriveFont(Font.PLAIN));
+				;
+			}
+		}
+		
 	}
 	
 	private Player getCurrentPlayer() {
