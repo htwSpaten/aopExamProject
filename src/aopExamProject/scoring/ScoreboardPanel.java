@@ -22,7 +22,6 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 	private Player currentPlayer;
 	private Map<Player,Map<ScoreCategory,JPanel>> cells;
 	private List<ScoreSubmitListener> submitListeners = new ArrayList<>();
-	private List<JLabel> headerLabels;
 	private List<JLabel> nameLabel;
 
 	public ScoreboardPanel(List<Player> kifflers) {
@@ -82,6 +81,7 @@ public class ScoreboardPanel extends JPanel implements DiceRollListener{
 				add(wrapper);
 			}
 		}
+		highlightCurrentPlayer();
 	}
 	
 	public void changePlayer() {
