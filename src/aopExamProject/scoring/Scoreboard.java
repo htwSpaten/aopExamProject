@@ -8,10 +8,21 @@ public class Scoreboard {
 	private Map<ScoreCategory, Integer> scores = new HashMap<>();
 	
 	private ScoreCategory[] lowerFields = {
-			ScoreCategory.THREE_OF_A_KIND, ScoreCategory.FOUR_OF_A_KIND, ScoreCategory.FULL_HOUSE, ScoreCategory.SMALL_STRAIGHT, ScoreCategory.LARGE_STRAIGHT, ScoreCategory.YAHTZEE, ScoreCategory.CHANCE
+			ScoreCategory.THREE_OF_A_KIND, 
+			ScoreCategory.FOUR_OF_A_KIND, 
+			ScoreCategory.FULL_HOUSE, 
+			ScoreCategory.SMALL_STRAIGHT, 
+			ScoreCategory.LARGE_STRAIGHT, 
+			ScoreCategory.YAHTZEE, 
+			ScoreCategory.CHANCE
 		};
 	private ScoreCategory[] upperFields = {
-			ScoreCategory.ONES, ScoreCategory.TWOS, ScoreCategory.THREES, ScoreCategory.FOURS, ScoreCategory.FIVES, ScoreCategory.SIXES
+			ScoreCategory.ONES, 
+			ScoreCategory.TWOS, 
+			ScoreCategory.THREES,
+			ScoreCategory.FOURS, 
+			ScoreCategory.FIVES, 
+			ScoreCategory.SIXES
 		};
 	
 	public void setScore(ScoreCategory cat, int points) {
